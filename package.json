@@ -1,0 +1,27 @@
+{
+  "name": "at.parcivalltd.jchess",
+  "displayName": "jchess",
+  "version": "1.0.0",
+  "description": "A chess platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/index.js"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Julian Gabriel",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "cordova-android": "^12.0.1"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  }
+}

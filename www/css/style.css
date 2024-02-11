@@ -1,0 +1,901 @@
+* {
+  transition: background-color 0.1s ease, color 0.1s ease !important;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("../img/ubuntu-font/Ubuntu-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    #sidebar, #mainbar {
+      width: 100%;
+      position: fixed;
+    }
+  
+    #left-sidebar {
+      top: 0;
+    }
+    #mainbar {
+      bottom: 0;
+    }
+  
+    .main-container {
+      margin-top: 60px; /* Adjust this value based on the height of your left-sidebar */
+      margin-bottom: 60px; /* Adjust this value based on the height of your right-sidebar */
+    }
+  }
+
+:root[data-theme="light"] {
+  --text-color: #272727;
+  --background-color: #ffffff;
+  --mainbar-background-color: rgb(233, 221, 215);
+  --btn-background-color: #573826;
+  --playerinfo-icon-color: #fef3ec;
+  --playerinfo-background-color: #573826;
+  --text-color-rev: #fff;
+  --header-color: #573826;
+  --btn-color: #fff;
+  --info-color: #7a6f69;
+  --playBtnDropdown: #664f41;
+}
+
+.pfp {
+  background-color: var(--mainbar-background-color) !important;
+  color: var(--text-color-rev) !important;
+  border-radius: 50%;
+  margin-right: 20px;
+  width: 75px;
+  border: var(--btn-background-color) 2px solid !important;
+}
+
+#pfpImg {
+  background-color: var(--mainbar-background-color) !important;
+  color: var(--text-color-rev) !important;
+  border-radius: 50%;
+  margin-right: 17px;
+  width: 55px;
+  border: var(--btn-background-color) 2px solid !important;
+}
+
+#pfpPrevDiv {
+  padding: 15px;
+  background-color: var(--playerinfo-icon-color);
+  border-radius: 12px;
+}
+:root[data-theme="dark"] {
+  --text-color: #fff;
+  --background-color: #111111;
+  --mainbar-background-color: #3d281c;
+  --btn-background-color: #e5d2c5;
+  --playerinfo-icon-color: #3d281c;
+  --playerinfo-background-color: #fef3ec;
+  --text-color-rev: #272727;
+  --header-color: #fef3ec;
+  --btn-color: #111111;
+  --info-color: #b8a79e;
+  --playBtnDropdown: #d1c0b4;
+}
+
+.modal {
+  transition: all 0.3s ease !important;
+}
+
+.fade {
+  transition: all 0.3s ease !important;
+}
+
+#gameEndModalBody {
+  padding-bottom: 0px;
+  padding-top: 30px;
+}
+
+#gameEndFooter {
+  padding-top: 0px;
+}
+
+#endGameModalContent {
+  right: 87.5px;
+}
+
+button,
+#topUsers,
+#pfpImg,
+#globChatWindow {
+  transition: transform 0.4s ease !important;
+}
+
+button:active,
+#topUsers:active,
+#pfpImg:active,
+#globChatWindow:active {
+  transform: scale(0.8) !important;
+}
+
+h1,
+h2 {
+  color: var(--header-color) !important;
+}
+
+option {
+  padding: 20px !important;
+}
+
+#previewBoard {
+  width: 1000px;
+  height: 1000px;
+}
+
+#gameModeInfo {
+  font-weight: bold;
+  margin-top: 14px;
+  color: var(--info-color);
+  text-align: center;
+}
+
+#mode-switcher {
+  margin-right: 10px;
+}
+
+#gameMode {
+  text-align: center;
+}
+
+body {
+  color: var(--text-color) !important;
+  background-color: var(--background-color) !important;
+  overflow-y: hidden;
+  touch-action: none;
+  font-family: "Ubuntu", sans-serif !important;
+}
+
+#borderDivMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 20px;
+  border: var(--playerinfo-background-color) 2.5px solid;
+  width: 380px;
+  height: 300px;
+  margin-top: 5%;
+}
+
+#topUsers {
+  border-radius: 12px;
+  background-color: var(--mainbar-background-color);
+  padding: 10px 10px 0px 10px !important;
+  width: 220px;
+  margin-top: 20px;
+}
+
+thead {
+  --bs-table-color: var(--header-color) !important;
+}
+
+tr {
+  --bs-table-color: var(--text-color) !important;
+}
+
+#btnDropdown {
+  background-color: var(--playBtnDropdown) !important;
+  border-color: var(--playBtnDropdown) !important;
+  color: var(--text-color-rev) !important;
+  border-radius: 0px 20px 20px 0px !important;
+  padding-right: 30px !important;
+  padding-left: 30px !important;
+}
+
+#playButton,
+#btnDropdown {
+  height: 100px !important;
+  --bs-btn-font-size: 2.4em !important;
+}
+
+#playButton {
+  border-radius: 20px 0px 0px 20px !important;
+  padding-left: 30px !important;
+}
+
+.dropdown-menu {
+  background-color: var(--playBtnDropdown) !important;
+  border-color: var(--info-color) !important;
+  border-width: 3px !important;
+  --bs-dropdown-item-color: var(--text-color-rev) !important;
+  --bs-dropdown-item-active-color: var(--text-color-rev) !important;
+  --bs-dropdown-item-active-bg: var(--playBtnDropdown) !important;
+  width: 300px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin-top: 105px !important;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+#mainHeader {
+  margin-bottom: 30px;
+}
+
+.dropdown-header {
+  color: var(--text-color-rev) !important;
+}
+
+.dropdown-item {
+  padding-top: 13px !important;
+  padding-bottom: 13px !important;
+  color: var(--text-color-rev) !important;
+}
+
+#globChatWindow {
+  border-radius: 12px !important;
+  background-color: var(--mainbar-background-color) !important;
+  padding: 10px !important;
+  width: 220px;
+  height: 215px;
+  margin-top: 20px;
+  color: var(--text-color) !important;
+  border: none !important;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 155, 155, 0.7) transparent;
+  scroll-behavior: smooth;
+}
+
+#globChatWindow::-webkit-scrollbar {
+  width: 8px;
+}
+
+#globChatWindow::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#globChatWindow::-webkit-scrollbar-thumb {
+  background-color: var(--playerinfo-background-color);
+  border-radius: 20px;
+  border: 3px solid transparent;
+}
+
+#sendButton {
+  height: 43px;
+}
+
+#globMessage {
+  width: 167px;
+  height: 43px;
+  margin-right: 12px;
+}
+
+#topUsersTable tr:last-child td {
+  border-bottom: none;
+  padding-bottom: 13px;
+}
+
+.dropdown-item.active {
+  background-color: var(--btn-background-color) !important;
+  color: var(--text-color-rev) !important;
+}
+
+.dropdown-item:active {
+  background-color: var(--btn-background-color) !important;
+  color: var(--text-color-rev) !important;
+}
+
+#topUsersTable {
+  --bs-table-bg: var(--mainbar-background-color) !important;
+}
+
+.highlight-white {
+  background-color: #584f44;
+}
+.highlight-black {
+  background-color: #584f44;
+}
+
+.main-container {
+  position: absolute;
+  left: 90px;
+  top: 0;
+  right: 317.5px;
+  display: flex;
+  bottom: 0;
+  overflow: hidden;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.game-selection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#myBoard {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.grey-square {
+  position: relative;
+}
+
+.grey-square::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/circle.png");
+  background-size: cover;
+  opacity: 0.5;
+}
+
+#players {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.player {
+  position: relative;
+}
+
+.fas.fa-crown {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  color: #ab9627;
+}
+
+.enemy-square {
+  position: relative;
+}
+
+.enemy-square::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../img/circle2.png");
+  background-size: cover;
+  opacity: 0.5;
+}
+
+#moves-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+#moves-container::-webkit-scrollbar-thumb {
+  background-color: var(--playerinfo-background-color);
+  border-radius: 5px;
+}
+
+#moves-container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+#moves-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-height: calc(97vh - 450px);
+  overflow: hidden;
+  padding-top: 10px;
+  overflow-y: auto;
+  padding-right: 10px;
+  scroll-behavior: smooth;
+}
+
+#moves-container > div {
+  margin-bottom: auto;
+}
+
+#sidebar {
+  background-color: var(--mainbar-background-color);
+  padding: 20px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  min-width: 250px;
+  height: calc(100% - 40px);
+  overflow: auto;
+  overflow-x: hidden;
+  margin: 20px;
+  border-radius: 15px;
+  width: 350px;
+}
+
+#chat-container {
+  padding-bottom: 20px;
+}
+
+#mainbar {
+  background-color: var(--mainbar-background-color);
+  padding: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: calc(100% - 40px);
+  overflow: auto;
+  margin: 20px;
+  border-radius: 15px;
+}
+
+#white-timer {
+  padding: 5px 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+}
+
+#black-timer {
+  padding: 5px 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #f5f5f5;
+  background-color: rgb(54, 54, 54);
+  border-radius: 5px;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+}
+
+#black-moves #move {
+  background-color: #f1eded;
+  color: #272727;
+}
+#white-moves #move {
+  background-color: #424141;
+  color: #ebe9e9;
+}
+
+#home-button {
+  margin-bottom: 0px !important;
+}
+
+#white-moves {
+  text-align: right;
+}
+
+#number {
+  color: gray;
+  margin-right: 10px;
+}
+
+.move-list:before {
+  content: "";
+  display: block;
+  border-radius: 3px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.move-list {
+  font-size: 0.9em;
+  padding: 5px;
+  overflow: auto;
+  max-height: 85vh;
+  border-radius: 5px;
+}
+
+#resign-button {
+  position: absolute;
+  bottom: 20px;
+}
+
+#move {
+  padding: 5px 15px 5px 15px;
+  border-radius: 3px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: right;
+  z-index: 3;
+}
+
+.playerInfo {
+  position: fixed;
+  top: 0;
+  width: calc(50vw - 142px);
+  background-color: #f8f9fa;
+  z-index: 100;
+  height: 82px;
+  background-color: var(--playerinfo-background-color);
+  margin: 20px 40px 20px 40px;
+  border-radius: 15px;
+  min-width: 940px !important;
+}
+
+.dropdown-item-text {
+  color: var(--info-color) !important;
+}
+
+.player-info-item {
+  color: var(--text-color-rev) !important;
+  margin-bottom: 0px;
+}
+
+#centerContainer {
+  background-color: var(--info-color);
+}
+
+.player-icon {
+  color: var(--playerinfo-icon-color);
+  background-color: var(--btn-background-colorbtn-background-color) !important;
+  padding: 7px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.playerInfo .col {
+  width: max-content;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#enemyInfo,
+#playerInfo {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 5px;
+}
+
+#playersDiv {
+  border: var(--playerinfo-background-color) 3px solid;
+  padding: 5px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+#enemyInfo {
+  margin-bottom: 10px;
+}
+
+#playerInfo {
+  padding-top: 10px;
+}
+
+#player-timer,
+#enemy-timer {
+  padding: 5px 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #f5f5f5;
+  background-color: rgb(54, 54, 54);
+  border-radius: 5px;
+}
+
+#pModal {
+  padding-top: 50px;
+  font-size: 20px;
+  z-index: 3;
+}
+
+.modal-header {
+  background-color: var(--mainbar-background-color);
+  color: var(--text-color);
+  border-radius: 15px 15px 0px 0px !important;
+  border-bottom: none !important;
+}
+
+.modal-footer {
+  border-top: none !important;
+}
+
+.modal-content {
+  border: var(--mainbar-background-color) 5px solid !important;
+  border-radius: 20px !important;
+  background-color: var(--background-color) !important;
+}
+
+.modal-body {
+  background-color: var(--background-color);
+  border-radius: 20px !important;
+}
+
+.btn-primary {
+  background-color: var(--btn-background-color) !important;
+  border-color: var(--btn-background-color) !important;
+  --bs-btn-color: var(--btn-color) !important;
+  font-weight: bold !important;
+}
+
+#saveNewPassword {
+  margin-top: 32px;
+}
+
+#errorBox {
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+#settingsResponseMessage {
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 15px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+#result {
+  font-size: 36px;
+  font-weight: bold;
+  color: #337ab7;
+  text-align: center;
+}
+
+#time {
+  font-size: 24px;
+  text-align: center;
+}
+
+.transition-fade {
+  transition: 0.4s;
+  opacity: 1;
+}
+
+html.is-animating .transition-fade {
+  opacity: 0;
+}
+
+#chat-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+#chat-box {
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f5f5f5;
+  scroll-behavior: smooth;
+  border: #61442a 3px solid !important;
+}
+
+#chat-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+#chat-box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#chat-box::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 20px;
+}
+
+.message {
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 5px 13px 5px 13px;
+  font-weight: normal !important;
+}
+
+#msgI {
+  font-size: small;
+  color: var(--info-color) !important;
+}
+
+.message strong {
+  font-weight: bold !important;
+}
+
+.whiteMsg {
+  align-self: flex-start;
+  background-color: white;
+  color: #383838 !important;
+}
+
+.blackMsg {
+  align-self: flex-end;
+  background-color: rgb(73, 73, 73);
+  color: white !important;
+}
+
+.globMessage-block {
+  font-size: 14px;
+  border-top: var(--info-color) 0.5px solid;
+  padding: 5px 0px 5px 0px;
+}
+
+.globMessage-block span {
+  margin-left: 12px;
+}
+
+#globMsg {
+  font-size: small;
+  color: var(--info-color) !important;
+}
+
+#globUser {
+  font-weight: bold;
+  color: grey !important;
+}
+
+#globUser i {
+  color: var(--info-color) !important;
+  margin-right: 5px;
+}
+
+.title-container img {
+  max-width: 140px;
+  margin-bottom: 20px;
+}
+
+.title-container h1 {
+  font-size: 4em;
+  margin-bottom: 20px;
+}
+
+#topUsersDiv,
+#globChat {
+  margin-top: 217.5px;
+}
+
+#cookieModal .modal-content {
+  height: 365px;
+}
+
+#footerList li {
+  color: grey !important	;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+#footerList li a {
+  color: darkgray !important;
+}
+
+#topUsersTable tr:first-child td {
+  font-size: large;
+  color: rgb(160, 142, 41);
+}
+
+#topUsersTable tr:first-child td:first-child::after {
+  content: "\f521";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animated-icon {
+  animation: spin 2s linear infinite;
+}
+
+.activeTurn {
+  background-color: var(--playerinfo-background-color) !important;
+  color: var(--text-color-rev) !important;
+  border-radius: 7px;
+}
+
+#evaluation-bar {
+  width: 25px;
+  height: 75vh;
+  border: 3px solid var(--playerinfo-background-color);
+  border-radius: 7px;
+  position: fixed;
+  right: 393px;
+  background-color: rgb(70, 70, 70);
+}
+
+#pieceTheme {
+  width: 150px;
+  background-color: var(--playerinfo-background-color);
+  border: none;
+  color: var(--text-color-rev);
+}
+
+#colorSelects {
+  width: 50px;
+}
+
+#darkSquareColor,
+#lightSquareColor {
+  background-color: var(--mainbar-background-color) !important;
+  border: none !important;
+}
+
+#evaluation-value {
+  width: 100%;
+  height: 0;
+  position: absolute;
+  bottom: 0;
+  border-radius: 0px 0px 3px 3px;
+  transition: height 0.5s ease;
+  background-color: #f1eded;
+  height: 50%;
+}
+
+#playersDiv {
+  width: 309px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-label {
+  font-size: 11px;
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+#modeDropdown {
+  height: 200px;
+  padding: 0px;
+  overflow-y: scroll;
+}
+
+#modeDropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+#modeDropdown::-webkit-scrollbar-track {
+  background: var(--playBtnDropdown);
+}
+
+#modeDropdown::-webkit-scrollbar-thumb {
+  background-color: var(--mainbar-background-color);
+  border-radius: 20px;
+}
+
+.dropdown-item:hover {
+  background-color: var(--info-color) !important;
+}
+
+#joinToken {
+  width: 120px;
+  margin-right: 12px;
+}
+
+#prvMsg {
+  font-size: smaller;
+  padding: 5px;
+  margin: 0px;
+  margin-left: 12px;
+}
