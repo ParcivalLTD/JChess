@@ -211,7 +211,7 @@ function login() {
   const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
 
   if (username && password) {
-    fetch("php/backend.php", {
+    fetch("https://web009.wifiooe.at/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -264,7 +264,7 @@ if (document.getElementById("registerButton")) {
   });
 }
 
-fetch("php/updateTrophies.php")
+fetch("https://web009.wifiooe.at/php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
     if (data.status === "success") {
@@ -292,7 +292,7 @@ function register() {
   const password = document.getElementById("registerPassword").value;
 
   if (username && password) {
-    fetch("php/backend.php", {
+    fetch("https://web009.wifiooe.at/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -496,7 +496,7 @@ function changePassword() {
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");
   var currentPassword = localStorage.getItem("password") || sessionStorage.getItem("password");
 
-  fetch("php/change_password.php", {
+  fetch("https://web009.wifiooe.at/php/change_password.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -526,7 +526,7 @@ function changePassword() {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web009.wifiooe.at/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -543,7 +543,7 @@ async function getTrophies(username) {
 
 async function getRanking(username) {
   try {
-    const response = await fetch(`php/getRanking.php?username=${username}`);
+    const response = await fetch(`https://web009.wifiooe.at/php/getRanking.php?username=${username}`);
     const data = await response.json();
 
     if (data) {
@@ -612,7 +612,7 @@ function getCookie(name) {
 updateTheme();
 
 function fetchMessages() {
-  fetch("php/globalChat.php")
+  fetch("https://web009.wifiooe.at/php/globalChat.php")
     .then((response) => response.json())
     .then((data) => {
       if (document.getElementById("spinnerGlob21")) {
@@ -672,7 +672,7 @@ function sendMessage(username, message) {
   document.getElementById("sendGlob").style.display = "none";
 
   censorMessage(message).then((censoredMessage) => {
-    fetch("php/globalChat.php", {
+    fetch("https://web009.wifiooe.at/php/globalChat.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
