@@ -32,6 +32,8 @@ let token = data.split("&")[1];
 
 let hasRedirected = false;
 
+const fetchUrl = 'https://corsproxy.org/?' + encodeURIComponent('https://web009.wifiooe.at');
+
 socket.on("gamemode", function (gamemode) {
   if (!hasRedirected) {
     console.log("Redirecting to: " + "https://wavebeef.com/projects/jchess/online?=" + gamemode + "&" + token);
@@ -531,8 +533,10 @@ function onSnapEnd() {
   }
 }
 
+
+
 function changeTrophies(username, trophies) {
-  fetch("https://web009.wifiooe.at/php/updateTrophies.php", {
+  fetch(fetchUrl + "/php/updateTrophies.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -550,7 +554,7 @@ function changeTrophies(username, trophies) {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://web009.wifiooe.at/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(fetchUrl + `/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
