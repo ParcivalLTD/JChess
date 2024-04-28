@@ -22,8 +22,6 @@ let whiteTime = 900;
 let blackTime = 900;
 let intervalId = null;
 
-const fetchUrl = 'https://corsproxy.org/?' + encodeURIComponent('https://web009.wifiooe.at');
-
 window.onload = function () {
   const username = localStorage.getItem("username") || sessionStorage.getItem("username");
   const password = localStorage.getItem("password") || sessionStorage.getItem("password");
@@ -463,7 +461,7 @@ function onSnapEnd() {
 }
 
 function changeTrophies(username, trophies) {
-  fetch(url + "/php/updateTrophies.php", {
+  fetch("../php/updateTrophies.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -481,7 +479,7 @@ function changeTrophies(username, trophies) {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(fetchUrl + `/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`../php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {

@@ -202,8 +202,6 @@ document.getElementById("registerUsername").addEventListener("input", function (
   }, 500);
 });
 
-const fetchUrl = 'https://corsproxy.org/?' + encodeURIComponent('https://web009.wifiooe.at');
-
 function login() {
   clearError();
   document.getElementById("loginSpinner").style.display = "inline-block";
@@ -213,7 +211,7 @@ function login() {
   const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
 
   if (username && password) {
-    fetch(fetchUrl + "/php/backend.php", {
+    fetch("https://wavebeef.duckdns.org/projects/jchess/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -266,7 +264,7 @@ if (document.getElementById("registerButton")) {
   });
 }
 
-fetch(fetchUrl + "/php/updateTrophies.php")
+fetch("https://wavebeef.duckdns.org/projects/jchess/php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
     if (data.status === "success") {
@@ -276,7 +274,7 @@ fetch(fetchUrl + "/php/updateTrophies.php")
       });
       table += "</tbody></table>";
 
-      document.getElementById("topUsers").innerHTML = table;
+      document.querySelectorAll("#topUsers").forEach((el) => (el.innerHTML = table));
     } else {
       console.error("Error:", data.message);
     }
@@ -294,7 +292,7 @@ function register() {
   const password = document.getElementById("registerPassword").value;
 
   if (username && password) {
-    fetch(fetchUrl + "/php/backend.php", {
+    fetch("https://wavebeef.duckdns.org/projects/jchess/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -399,15 +397,9 @@ function showLoginPopup() {
 }
 
 function updateGameMode(gameMode) {
-  var header = document.getElementById("mainHeader");
-  var playButton = document.getElementById("playButton");
-  var gameModeInfo = document.getElementById("gameModeInfo");
+  document.querySelectorAll("#mainHeader").forEach((header) => (header.innerHTML = gameMode));
 
-  /* document.getElementById("prvMsg").style.display = "none"; */
-
-  header.innerHTML = gameMode;
-
-  if (playButton) {
+  document.querySelectorAll("#playButton").forEach((playButton) => {
     playButton.onclick = function () {
       switch (true) {
         case gameMode.includes("Classic"):
@@ -431,9 +423,9 @@ function updateGameMode(gameMode) {
           break;
       }
     };
-  }
+  });
 
-  if (gameModeInfo) {
+  document.querySelectorAll("#gameModeInfo").forEach((gameModeInfo) => {
     switch (true) {
       case gameMode.includes("Classic"):
         gameModeInfo.innerHTML = "Play against other players online (15 min).";
@@ -460,7 +452,7 @@ function updateGameMode(gameMode) {
         localStorage.setItem("gameModeAbbr", "blt");
         break;
     }
-  }
+  });
 }
 
 var dropdownItems = document.querySelectorAll(".dropdown-item");
@@ -498,7 +490,7 @@ function changePassword() {
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");
   var currentPassword = localStorage.getItem("password") || sessionStorage.getItem("password");
 
-  fetch(fetchUrl + "/php/change_password.php", {
+  fetch("https://wavebeef.duckdns.org/projects/jchess/php/change_password.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -528,7 +520,7 @@ function changePassword() {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(fetchUrl + `/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://wavebeef.duckdns.org/projects/jchess/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -545,7 +537,7 @@ async function getTrophies(username) {
 
 async function getRanking(username) {
   try {
-    const response = await fetch(fetchUrl + `/php/getRanking.php?username=${username}`);
+    const response = await fetch(`https://wavebeef.duckdns.org/projects/jchess/php/getRanking.php?username=${username}`);
     const data = await response.json();
 
     if (data) {
@@ -562,21 +554,21 @@ async function getRanking(username) {
 
 async function updateUserInfo() {
   const username = localStorage.getItem("username") || sessionStorage.getItem("username");
-  document.getElementById("playerUsername").textContent = username;
+  document.querySelectorAll("#playerUsername").forEach((el) => (el.textContent = username));
 
-  document.getElementById("playerTrophies").innerHTML = '<i class="fa-solid fa-spin fa-circle-notch" style="font-size: 0.7em;"></i>';
-  document.getElementById("playerRanking").innerHTML = '<i class="fa-solid fa-spin fa-circle-notch" style="font-size: 0.7em;"></i>';
-  document.getElementById("pfpPlayerInfo").innerHTML = '<i class="fa-solid fa-spin fa-circle-notch" style="font-size: 0.7em;"></i>';
+  document.querySelectorAll("#playerTrophies").forEach((el) => (el.innerHTML = '<i class="fa-solid fa-spin fa-circle-notch" style="font-size: 0.7em;"></i>'));
+  document.querySelectorAll("#playerRanking").forEach((el) => (el.innerHTML = '<i class="fa-solid fa-spin fa-circle-notch" style="font-size: 0.7em;"></i>'));
+  document.querySelectorAll("#pfpPlayerInfo").forEach((el) => (el.innerHTML = '<i class="fa-solid fa-spin fa-circle-notch" style="font-size: 0.7em;"></i>'));
 
   if (!username) return;
 
-  document.getElementById("pfpPlayerInfo").innerHTML = "<img src='https://robohash.org/" + (localStorage.getItem("username") || sessionStorage.getItem("username")) + "' id='pfpImg'>";
+  document.querySelectorAll("#pfpPlayerInfo").forEach((el) => (el.innerHTML = "<img src='https://robohash.org/" + (localStorage.getItem("username") || sessionStorage.getItem("username")) + "' id='pfpImg'>"));
 
   const trophies = await getTrophies(username);
   const ranking = await getRanking(username);
 
-  document.getElementById("playerTrophies").textContent = trophies;
-  document.getElementById("playerRanking").textContent = ranking;
+  document.querySelectorAll("#playerTrophies").forEach((el) => (el.textContent = trophies));
+  document.querySelectorAll("#playerRanking").forEach((el) => (el.textContent = ranking));
 }
 
 updateUserInfo();
@@ -614,28 +606,28 @@ function getCookie(name) {
 updateTheme();
 
 function fetchMessages() {
-  fetch(fetchUrl + "/php/globalChat.php")
+  fetch("https://wavebeef.duckdns.org/projects/jchess/php/globalChat.php")
     .then((response) => response.json())
     .then((data) => {
-      if (document.getElementById("spinnerGlob21")) {
-        document.getElementById("spinnerGlob21").style.display = "none";
-      }
-      let chat = document.getElementById("globChatWindow");
-      chat.innerHTML = "";
-      let div = document.createElement("div");
-      div.innerHTML = "<span style='color: grey; margin-left: 92.5px'>...</span><br><br>";
-      chat.appendChild(div);
-      data.reverse();
-      for (let message of data) {
+      document.querySelectorAll("#spinnerGlob21").forEach((el) => (el.style.display = "none"));
+      let chats = document.querySelectorAll("#globChatWindow");
+      chats.forEach((chat) => {
+        chat.innerHTML = "";
         let div = document.createElement("div");
-        div.className = "globMessage-block";
-        div.innerHTML = "<span id='globUser'><i class='fa-solid fa-user'></i>" + message.username + "</span> <br> <span id='globMsg'>" + message.message + "</span>";
+        div.innerHTML = "<span style='color: grey; margin-left: 92.5px'>...</span><br><br>";
         chat.appendChild(div);
-      }
-      let isAtBottom = chat.scrollTop + chat.clientHeight === chat.scrollHeight;
-      if (!isAtBottom) {
-        chat.scrollTop = chat.scrollHeight;
-      }
+        data.reverse();
+        for (let message of data) {
+          let div = document.createElement("div");
+          div.className = "globMessage-block";
+          div.innerHTML = "<span id='globUser'><i class='fa-solid fa-user'></i>" + message.username + "</span> <br> <span id='globMsg'>" + message.message + "</span>";
+          chat.appendChild(div);
+        }
+        let isAtBottom = chat.scrollTop + chat.clientHeight === chat.scrollHeight;
+        if (!isAtBottom) {
+          chat.scrollTop = chat.scrollHeight;
+        }
+      });
     })
     .catch((error) => console.error("Error:", error));
 }
@@ -674,7 +666,7 @@ function sendMessage(username, message) {
   document.getElementById("sendGlob").style.display = "none";
 
   censorMessage(message).then((censoredMessage) => {
-    fetch(fetchUrl + "/php/globalChat.php", {
+    fetch("https://wavebeef.duckdns.org/projects/jchess/php/globalChat.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

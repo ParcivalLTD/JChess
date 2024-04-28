@@ -111,8 +111,88 @@
             </div>
           </div>
         </div>
+        <div id="scrollDiv">
+        <div id="mainRowM" class="row gx-5">
+            
+            <div class="col">
+              <div class="title-container d-flex flex-column justify-content-center align-items-center">
+                <img src="img/logo.png" alt="Logo" id="logo" />
+                <h1 id="pageTitle">J-Chess 2</h1>
+              </div>
+              <div id="borderDivMain">
+                <h1 id="mainHeader">J-Chess</h1>
+                <div class="game-selection d-flex flex-column align-items-stretch">
+                  <div class="btn-group">
+                    <button type="button" id="playButton" class="btn btn-lg btn-primary">Battle</button>
+                    <button type="button" id="btnDropdown" class="btn btn-lg btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                      <span class="dropdown-header">Select Game Mode</span>
+                      <a class="dropdown-item" id="online" href="#"><i class="fas fa-globe"></i> Classic</a>
+                      <a class="dropdown-item" ref="#"><i class="fas fa-robot"></i> Bot</a>
+                      <a class="dropdown-item" href="#"><i class="fas fa-bolt"></i> Blitz</a>
+                      <a class="dropdown-item" href="#"><i class="fas fa-chess-pawn"></i> Pawn Endgame</a>
+                      <a class="dropdown-item" href="#"><i class="fas fa-chess-queen"></i> Q vs N</a>
+                      <a class="dropdown-item" href="#"><i class="fas fa-bullseye"></i> Bullet</a>
+                    </div>
+                  </div>
+                </div>
+                <div id="gameModeInfo"></div>
+                    <div class="d-flex flex-column justify-content-between">
+                        <div id="topUsers" class="col p-3">
+                        <i class="fas fa-circle-notch fa-spin fa-1x"></i>
+                        </div>
+                        <div id="globChatWindow" class="col border p-3 mb-3 bg-light rounded">
+                        <i id="spinnerGlobChat" class="fa-solid fa-spin fa-circle-notch"></i>
+                        </div>
+                        <div class="d-flex">
+                            <input type="text" id="globMessage" class="form-control mb-2 mr-2" placeholder="Nachricht"></input>
+                            <button id="sendButton" class="btn btn-primary">
+                              <i id="sendGlob" class="fas fa-paper-plane"></i>
+                              <i id="spinnerGlob" class="fa-solid fa-spin fa-circle-notch" style="font-size: 1em; display: none"></i>
+                            </button>
+                          </div>
+                    </div>
+              </div>
+              <div class="text-center">
+                <ul id="footerList" class="list-inline">
+                  <li class="list-inline-item">&copy; 2023 Julian Gabriel</li>
+                  <li class="list-inline-item"><a href="/contact">Contact</a></li>
+                  <li class="list-inline-item"><a href="/imprint">Imprint</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <div id="padding2"></div>
+
+            <div id="mobileBar" class="fixed-bottom d-flex flex-row align-items-center justify-content-center p-3">
+                
+
+                <h4 class="player-info-item">
+                    <picture id="pfpPlayerInfo"></picture>
+                    <span id="playerUsername"></span>
+                </h4>
+                <h4 class="player-info-item">
+                    <i class="fas fa-trophy player-icon" aria-hidden="true"></i> 
+                    <span id="playerTrophies"></span>
+                </h4>
+                <h4 class="player-info-item">
+                    <i class="fas fa-chess-king player-icon" aria-hidden="true"></i> 
+                    <span id="playerRanking"></span>
+                </h4>
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settingsModal"><i class="fa-solid fa-gear"></i></button>
+                <br />
+                <button id="logoutButton" class="btn btn-danger mt-auto"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+          </div>
+        </div>
+          
       </div>
     </div>
+
+
 
     <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -129,9 +209,7 @@
                     <img width="80px" id="piecePreview" src="img/chesspieces/icpieces//wP.svg" alt="Kein Vorschaubild verfügbar" class="mt-3" style="margin-top: 0px !important; margin-right: 15px;">
                     <select class="form-select me-3" id="pieceTheme" style="width: auto;">
                       <script>
-                        const url = 'https://corsproxy.org/?' + encodeURIComponent('https://web009.wifiooe.at');
-
-                        fetch(url +'/php/getThemes.php')
+                        fetch('https://wavebeef.duckdns.org/projects/jchess/php/getThemes.php')
                         .then(response => response.json())
                         .then(data => {
                           const select = document.getElementById('pieceTheme');

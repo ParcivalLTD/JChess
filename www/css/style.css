@@ -8,25 +8,6 @@
   font-weight: bold;
 }
 
-@media (max-width: 600px) {
-    #sidebar, #mainbar {
-      width: 100%;
-      position: fixed;
-    }
-  
-    #left-sidebar {
-      top: 0;
-    }
-    #mainbar {
-      bottom: 0;
-    }
-  
-    .main-container {
-      margin-top: 60px; /* Adjust this value based on the height of your left-sidebar */
-      margin-bottom: 60px; /* Adjust this value based on the height of your right-sidebar */
-    }
-  }
-
 :root[data-theme="light"] {
   --text-color: #272727;
   --background-color: #ffffff;
@@ -898,4 +879,116 @@ html.is-animating .transition-fade {
   padding: 5px;
   margin: 0px;
   margin-left: 12px;
+}
+
+#mainRowM {
+  display: none;
+  flex-direction: column;
+  max-height: 80vh;
+}
+
+#mobileBar {
+  display: none;
+  background-color: var(--mainbar-background-color);
+  width: 100vw;
+  height: 10vh;
+  gap: 1rem;
+}
+
+@media (max-width: 1234px) {
+  #mainRow,
+  #mainbar,
+  .playerInfo {
+    display: none !important;
+  }
+
+  #mainRowM {
+    display: block;
+  }
+
+  #padding2 {
+    height: 200px;
+  }
+
+  #mobileBar {
+    display: flex;
+  }
+
+  .main-container {
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  #scrollDiv {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+  }
+
+  #globChatWindow,
+  #topUsers {
+    height: 265px;
+    max-height: 265px;
+  }
+
+  #borderDivMain {
+    height: auto;
+  }
+
+  #logoutButton {
+    margin-top: 0px !important;
+  }
+
+  .player-info-item,
+  .player-info-item i {
+    color: var(--header-color) !important;
+  }
+
+  #sidebar {
+    flex-direction: row;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 250px;
+    top: auto;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0;
+    border-radius: 12px 12px 0px 0px;
+  }
+
+  #evaluation-bar {
+    left: 48.7%;
+    top: -5vw;
+    height: 80vw;
+    transform: rotate(90deg);
+  }
+
+  #info,
+  #moves-container,
+  #chat-container {
+    display: none;
+  }
+
+  #playersDiv {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    position: relative;
+    left: calc(50% - 154.5px);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    /* background-color: blue; */
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    /* background-color: green; */
+  }
 }
