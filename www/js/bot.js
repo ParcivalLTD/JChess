@@ -463,9 +463,6 @@ function onSnapEnd() {
 function changeTrophies(username, trophies) {
   fetch("https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({
       username: username,
       trophies: trophies,

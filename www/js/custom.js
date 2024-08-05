@@ -640,57 +640,31 @@ function fetchMessages() {
 
 fetchMessages();
 
-async function censorMessage(message) {
-  const url = "https://corsproxy.io/?https://neutrinoapi.net/bad-word-filter";
-  const options = {
-    method: "POST",
-    headers: {
-      "User-ID": "parcivalltd",
-      "API-Key": "P8Zq9n2ePQxftphrbCKiyUAEH5WfvsBiRQidluQwtswGmDrY",
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      "censor-character": "*",
-      catalog: "strict",
-      content: message,
-    }),
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    return result["censored-content"];
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 function sendMessage(username, message) {
   if (document.getElementById("globMessage").value.trim() === "") return;
 
   document.getElementById("spinnerGlob").style.display = "inline-block";
   document.getElementById("sendGlob").style.display = "none";
 
-  censorMessage(message).then((censoredMessage) => {
-    fetch("https://web010.wifiooe.at/julian/jchess/www/php/globalChat.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "username=" + encodeURIComponent(username) + "&message=" + encodeURIComponent(censoredMessage),
+  fetch("https://web010.wifiooe.at/julian/jchess/www/php/globalChat.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "username=" + encodeURIComponent(username) + "&message=" + encodeURIComponent(message),
+  })
+    .then(() => fetchMessages())
+    .then(() => {
+      document.getElementById("spinnerGlob").style.display = "none";
+      document.getElementById("sendGlob").style.display = "inline-block";
     })
-      .then(() => fetchMessages())
-      .then(() => {
-        document.getElementById("spinnerGlob").style.display = "none";
-        document.getElementById("sendGlob").style.display = "inline-block";
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        document.getElementById("spinnerGlob").style.display = "none";
-        document.getElementById("sendGlob").style.display = "inline-block";
-      });
-  });
+    .catch((error) => {
+      console.error("Error:", error);
+      document.getElementById("spinnerGlob").style.display = "none";
+      document.getElementById("sendGlob").style.display = "inline-block";
+    });
 }
+
 let sendButton = document.getElementById("sendButton");
 sendButton.addEventListener("click", function () {
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");

@@ -1,5 +1,14 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
 include_once('connection.php');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header("HTTP/1.1 200 OK");
+    exit();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = file_get_contents("php://input");

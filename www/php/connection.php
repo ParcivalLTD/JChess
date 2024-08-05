@@ -1,5 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+
 $uri = "mysql://avnadmin:AVNS_Ww0zuzpscfo0aQPRXrY@test-ju20gabriel-5cf8.a.aivencloud.com:25251/defaultdb?ssl-mode=REQUIRED";
 
 $fields = parse_url($uri);

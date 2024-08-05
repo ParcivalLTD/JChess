@@ -492,7 +492,9 @@ function onDrop(source, target) {
 }
 
 resignButton.addEventListener("click", function () {
-  socket.emit("playerResigned");
+  socket.emit("resign");
+
+  console.log("sds");
 
   if (playerColor === "white") {
     gameEnd("blackWins");
@@ -533,9 +535,6 @@ function onSnapEnd() {
 function changeTrophies(username, trophies) {
   fetch("https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({
       username: username,
       trophies: trophies,
@@ -659,35 +658,8 @@ socket.on("chatMessage", ({ username, message }) => {
   chatBox.scrollTop = chatBox.scrollHeight;
 });
 
-async function censorMessage(message) {
-  const url = "https://corsproxy.io/?https://neutrinoapi.net/bad-word-filter";
-  const options = {
-    method: "POST",
-    headers: {
-      "User-ID": "parcivalltd",
-      "API-Key": "P8Zq9n2ePQxftphrbCKiyUAEH5WfvsBiRQidluQwtswGmDrY",
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      "censor-character": "*",
-      catalog: "strict",
-      content: message,
-    }),
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    return result["censored-content"];
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 function sendMessage(message) {
-  censorMessage(message).then((censoredMessage) => {
-    socket.emit("chatMessage", censoredMessage);
-  });
+  socket.emit("chatMessage", message);
 }
 
 chatButton.addEventListener("click", function () {
