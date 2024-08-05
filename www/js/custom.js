@@ -56,7 +56,7 @@ function checkTokenValidity(token) {
 }
 
 function createPrivateMatchLink(gameMode, token) {
-  const baseUrl = "https://web010.wifiooe.at/julian/jchess/www/online?=";
+  const baseUrl = "https://web009.wifiooe.at/online?=";
   return `${baseUrl}${gameMode}&${token}`;
 }
 
@@ -211,7 +211,7 @@ function login() {
   const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
 
   if (username && password) {
-    fetch("https://web010.wifiooe.at/julian/jchess/www/php/backend.php", {
+    fetch("https://web009.wifiooe.at/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -264,7 +264,7 @@ if (document.getElementById("registerButton")) {
   });
 }
 
-fetch("https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php")
+fetch("https://web009.wifiooe.at/php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
     if (data.status === "success") {
@@ -292,7 +292,7 @@ function register() {
   const password = document.getElementById("registerPassword").value;
 
   if (username && password) {
-    fetch("https://web010.wifiooe.at/julian/jchess/www/php/backend.php", {
+    fetch("https://web009.wifiooe.at/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -333,7 +333,7 @@ function toggleDisplay(id, state) {
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
-  document.querySelectorAll(".logoutButton").forEach((button) => {
+  document.querySelectorAll("#logoutButton").forEach((button) => {
     button.addEventListener("click", logout);
   });
   document.querySelectorAll(".loginlink").forEach((link) => {
@@ -346,7 +346,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 function logout() {
   localStorage.clear();
-  logoutButton.style.display = "none";
+  document.querySelectorAll("#logoutButton").forEach((button) => {
+    button.style.display = "none";
+  });
   showLoginPopup();
 }
 
@@ -409,22 +411,22 @@ function updateGameMode(gameMode) {
     playButton.onclick = function () {
       switch (true) {
         case gameMode.includes("Classic"):
-          window.location.href = "online/?=" + "cl";
+          window.location.href = "online/index.html?=" + "cl";
           break;
         case gameMode.includes("Bot"):
           window.location.href = "bot/index.html";
           break;
         case gameMode.includes("Blitz"):
-          window.location.href = "online/?=" + "blz";
+          window.location.href = "online/index.html?=" + "blz";
           break;
         case gameMode.includes("Pawn Endgame"):
-          window.location.href = "online/?=" + "pwn";
+          window.location.href = "online/index.html?=" + "pwn";
           break;
         case gameMode.includes("Q vs N"):
-          window.location.href = "online/?=" + "qvk";
+          window.location.href = "online/index.html?=" + "qvk";
           break;
         case gameMode.includes("Bullet"):
-          window.location.href = "online/?=" + "blt";
+          window.location.href = "online/index.html?=" + "blt";
         default:
           break;
       }
@@ -496,7 +498,7 @@ function changePassword() {
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");
   var currentPassword = localStorage.getItem("password") || sessionStorage.getItem("password");
 
-  fetch("https://web010.wifiooe.at/julian/jchess/www/php/change_password.php", {
+  fetch("https://web009.wifiooe.at/php/change_password.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -526,7 +528,7 @@ function changePassword() {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web009.wifiooe.at/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -543,7 +545,7 @@ async function getTrophies(username) {
 
 async function getRanking(username) {
   try {
-    const response = await fetch(`https://web010.wifiooe.at/julian/jchess/www/php/getRanking.php?username=${username}`);
+    const response = await fetch(`https://web009.wifiooe.at/php/getRanking.php?username=${username}`);
     const data = await response.json();
 
     if (data) {
@@ -612,7 +614,7 @@ function getCookie(name) {
 updateTheme();
 
 function fetchMessages() {
-  fetch("https://web010.wifiooe.at/julian/jchess/www/php/globalChat.php")
+  fetch("https://web009.wifiooe.at/php/globalChat.php")
     .then((response) => response.json())
     .then((data) => {
       document.querySelectorAll("#spinnerGlob21").forEach((el) => (el.style.display = "none"));
@@ -620,13 +622,23 @@ function fetchMessages() {
       chats.forEach((chat) => {
         chat.innerHTML = "";
         let div = document.createElement("div");
-        div.innerHTML = "<span style='color: grey; margin-left: 92.5px'>...</span><br><br>";
+        div.textContent = "...";
+        div.style.color = "grey";
+        div.style.marginLeft = "92.5px";
         chat.appendChild(div);
         data.reverse();
         for (let message of data) {
           let div = document.createElement("div");
           div.className = "globMessage-block";
-          div.innerHTML = "<span id='globUser'><i class='fa-solid fa-user'></i>" + message.username + "</span> <br> <span id='globMsg'>" + message.message + "</span>";
+          let userSpan = document.createElement("span");
+          userSpan.id = "globUser";
+          userSpan.innerHTML = "<i class='fa-solid fa-user'></i> " + message.username;
+          let msgSpan = document.createElement("span");
+          msgSpan.id = "globMsg";
+          msgSpan.textContent = message.message;
+          div.appendChild(userSpan);
+          div.appendChild(document.createElement("br"));
+          div.appendChild(msgSpan);
           chat.appendChild(div);
         }
         let isAtBottom = chat.scrollTop + chat.clientHeight === chat.scrollHeight;
@@ -640,13 +652,44 @@ function fetchMessages() {
 
 fetchMessages();
 
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;")
+    .replace(/<img/g, "&lt;img")
+    .replace(/<\/img>/g, "&lt;/img&gt;")
+    .replace(/<iframe/g, "&lt;iframe")
+    .replace(/<\/iframe>/g, "&lt;/iframe&gt;");
+}
+
+function sanitizeMessage(message) {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = message;
+
+  const iframes = tempDiv.getElementsByTagName("iframe");
+  const images = tempDiv.getElementsByTagName("img");
+
+  while (iframes.length > 0) {
+    iframes[0].parentNode.removeChild(iframes[0]);
+  }
+
+  while (images.length > 0) {
+    images[0].parentNode.removeChild(images[0]);
+  }
+
+  return tempDiv.innerHTML;
+}
+
 function sendMessage(username, message) {
   if (document.getElementById("globMessage").value.trim() === "") return;
 
   document.getElementById("spinnerGlob").style.display = "inline-block";
   document.getElementById("sendGlob").style.display = "none";
 
-  fetch("https://web010.wifiooe.at/julian/jchess/www/php/globalChat.php", {
+  fetch("https://web009.wifiooe.at/php/globalChat.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -669,7 +712,7 @@ let sendButton = document.getElementById("sendButton");
 sendButton.addEventListener("click", function () {
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");
   let message = document.getElementById("globMessage").value;
-  sendMessage(username, message);
+  sendMessage(username, sanitizeMessage(escapeHTML(message)));
   messageInput.value = "";
   fetchMessages();
 });

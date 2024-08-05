@@ -74,9 +74,9 @@ io.on("connection", async (socket) => {
     ips.delete(socket.handshake.address);
     console.log("A user disconnected");
     const room = playerRooms[socket.id];
-    /* if (room) { */
-    socket.to(room).emit("opponentDisconnected", "Your opponent has disconnected. You win!");
-    /* } */
+    if (room) {
+      socket.to(room).emit("opponentDisconnected", "Your opponent has disconnected. You win!");
+    }
     delete playerRooms[socket.id];
     waitingPlayers = waitingPlayers.filter((player) => player !== socket);
   });

@@ -11,6 +11,7 @@ $db->exec("CREATE TABLE IF NOT EXISTS messages (
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $query = $db->query('SELECT * FROM messages ORDER BY id DESC LIMIT 20');
 
+
     echo json_encode($query->fetchAll(PDO::FETCH_ASSOC));
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = $_POST['message'];

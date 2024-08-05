@@ -34,7 +34,7 @@ let hasRedirected = false;
 
 socket.on("gamemode", function (gamemode) {
   if (!hasRedirected) {
-    window.location.assign("https://web010.wifiooe.at/julian/jchess/www/online?=" + gamemode + "&" + token);
+    window.location.assign("https://web009.wifiooe.at/online?=" + gamemode + "&" + token);
     hasRedirected = true;
   }
 });
@@ -243,6 +243,7 @@ socket.on("startGame", ({ room, player1, player2, player1Username, player2Userna
 
 socket.on("opponentDisconnected", (message) => {
   gameEnd(playerColor + "Wins");
+  console.log(message);
 });
 
 socket.on("opponentMove", (data) => {
@@ -531,7 +532,7 @@ function onSnapEnd() {
 }
 
 function changeTrophies(username, trophies) {
-  fetch("https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php", {
+  fetch("https://web009.wifiooe.at/php/updateTrophies.php", {
     method: "POST",
     body: JSON.stringify({
       username: username,
@@ -546,7 +547,7 @@ function changeTrophies(username, trophies) {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web009.wifiooe.at/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -633,11 +634,12 @@ chatButton.disabled = true;
 let chatSound = new Audio("../img/chat.mp3");
 chatSound.volume = 0.5;
 
-chatButton.addEventListener("click", function () {
-  let message = chatInput.value;
+document.getElementById("chat-button").addEventListener("click", function () {
+  const chatInput = document.getElementById("chat-input");
+  const chatBox = document.getElementById("chat-box");
+  const sanitizedText = chatInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  chatBox.innerHTML += `<div>${sanitizedText}</div>`;
   chatInput.value = "";
-  sendMessage(message);
-  chatSound.play();
 });
 
 socket.on("chatMessage", ({ username, message }) => {

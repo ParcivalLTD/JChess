@@ -562,7 +562,7 @@ tr {
 }
 
 #enemyInfo {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 #playerInfo {
@@ -923,6 +923,7 @@ html.is-animating .transition-fade {
   .main-container {
     left: 0 !important;
     right: 0 !important;
+    padding-top: 0px !important;
   }
 
   #scrollDiv {
@@ -931,6 +932,9 @@ html.is-animating .transition-fade {
     width: 100vw;
     display: flex;
     justify-content: center;
+    height: calc(90vh + 20px);
+    padding-top: 40px;
+    margin-bottom: calc(10vh - 20px);
   }
 
   #globChatWindow,
@@ -941,10 +945,15 @@ html.is-animating .transition-fade {
 
   #borderDivMain {
     height: auto;
+    border: none;
   }
 
   #logoutButton {
     margin-top: 0px !important;
+  }
+
+  .text-center {
+    padding-bottom: 10px;
   }
 
   .player-info-item,
@@ -952,24 +961,25 @@ html.is-animating .transition-fade {
     color: var(--header-color) !important;
   }
 
+  #endGameModalContent {
+    right: 0;
+  }
+
   #sidebar {
-    flex-direction: row !important;
+    /* flex-direction: row !important; */
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 250px;
+    height: 150px;
     top: auto;
     justify-content: center;
     vertical-align: middle;
     margin: 0;
-    border-radius: 12px 12px 0px 0px;
+    border-radius: 0px;
   }
 
   #evaluation-bar {
-    left: 48.7%;
-    top: -5vw;
-    height: 80vw;
-    transform: rotate(90deg);
+    display: none;
   }
 
   #info,
@@ -980,21 +990,28 @@ html.is-animating .transition-fade {
 
   #playersDiv {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-bottom: 0;
     position: relative;
-    left: calc(50% - 154.5px);
+    width: calc(100vw - 40px);
   }
 }
 
-@media (max-width: 768px) {
-  .main-container {
-    /* background-color: blue; */
+@media (max-width: 320px) {
+  body {
+    display: none;
   }
 }
 
-@media (max-width: 480px) {
-  .main-container {
-    /* background-color: green; */
-  }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--playerinfo-background-color);
+  border-radius: 10px;
 }
