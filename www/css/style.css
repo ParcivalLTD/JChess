@@ -401,6 +401,7 @@ tr {
   margin: 20px;
   border-radius: 15px;
   width: 350px;
+  flex-direction: column !important;
 }
 
 #chat-container {
@@ -895,6 +896,11 @@ html.is-animating .transition-fade {
   gap: 1rem;
 }
 
+#chat-input-div,
+#chat-box {
+  width: 310px;
+}
+
 @media (max-width: 1234px) {
   #mainRow,
   #mainbar,
@@ -947,7 +953,7 @@ html.is-animating .transition-fade {
   }
 
   #sidebar {
-    flex-direction: row;
+    flex-direction: row !important;
     position: fixed;
     bottom: 0;
     width: 100%;

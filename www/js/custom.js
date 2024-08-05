@@ -56,7 +56,7 @@ function checkTokenValidity(token) {
 }
 
 function createPrivateMatchLink(gameMode, token) {
-  const baseUrl = "https://wavebeef.com/projects/jchess/online?=";
+  const baseUrl = "https://web010.wifiooe.at/julian/jchess/www/online?=";
   return `${baseUrl}${gameMode}&${token}`;
 }
 
@@ -211,7 +211,7 @@ function login() {
   const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
 
   if (username && password) {
-    fetch("https://wavebeef.duckdns.org/projects/jchess/php/backend.php", {
+    fetch("https://web010.wifiooe.at/julian/jchess/www/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -264,7 +264,7 @@ if (document.getElementById("registerButton")) {
   });
 }
 
-fetch("https://wavebeef.duckdns.org/projects/jchess/php/updateTrophies.php")
+fetch("https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
     if (data.status === "success") {
@@ -292,7 +292,7 @@ function register() {
   const password = document.getElementById("registerPassword").value;
 
   if (username && password) {
-    fetch("https://wavebeef.duckdns.org/projects/jchess/php/backend.php", {
+    fetch("https://web010.wifiooe.at/julian/jchess/www/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -333,9 +333,15 @@ function toggleDisplay(id, state) {
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
-  document.getElementById("logoutButton").addEventListener("click", logout);
-  document.getElementById("loginlink").addEventListener("click", showLoginForm);
-  document.getElementById("registerlink").addEventListener("click", showRegisterForm);
+  document.querySelectorAll(".logoutButton").forEach((button) => {
+    button.addEventListener("click", logout);
+  });
+  document.querySelectorAll(".loginlink").forEach((link) => {
+    link.addEventListener("click", showLoginForm);
+  });
+  document.querySelectorAll(".registerlink").forEach((link) => {
+    link.addEventListener("click", showRegisterForm);
+  });
 });
 
 function logout() {
@@ -490,7 +496,7 @@ function changePassword() {
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");
   var currentPassword = localStorage.getItem("password") || sessionStorage.getItem("password");
 
-  fetch("https://wavebeef.duckdns.org/projects/jchess/php/change_password.php", {
+  fetch("https://web010.wifiooe.at/julian/jchess/www/php/change_password.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -520,7 +526,7 @@ function changePassword() {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://wavebeef.duckdns.org/projects/jchess/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -537,7 +543,7 @@ async function getTrophies(username) {
 
 async function getRanking(username) {
   try {
-    const response = await fetch(`https://wavebeef.duckdns.org/projects/jchess/php/getRanking.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/jchess/www/php/getRanking.php?username=${username}`);
     const data = await response.json();
 
     if (data) {
@@ -606,7 +612,7 @@ function getCookie(name) {
 updateTheme();
 
 function fetchMessages() {
-  fetch("https://wavebeef.duckdns.org/projects/jchess/php/globalChat.php")
+  fetch("https://web010.wifiooe.at/julian/jchess/www/php/globalChat.php")
     .then((response) => response.json())
     .then((data) => {
       document.querySelectorAll("#spinnerGlob21").forEach((el) => (el.style.display = "none"));
@@ -666,7 +672,7 @@ function sendMessage(username, message) {
   document.getElementById("sendGlob").style.display = "none";
 
   censorMessage(message).then((censoredMessage) => {
-    fetch("https://wavebeef.duckdns.org/projects/jchess/php/globalChat.php", {
+    fetch("https://web010.wifiooe.at/julian/jchess/www/php/globalChat.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",

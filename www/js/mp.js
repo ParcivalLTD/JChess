@@ -34,8 +34,7 @@ let hasRedirected = false;
 
 socket.on("gamemode", function (gamemode) {
   if (!hasRedirected) {
-    console.log("Redirecting to: " + "https://wavebeef.com/projects/jchess/online?=" + gamemode + "&" + token);
-    window.location.assign("https://wavebeef.com/projects/jchess/online?=" + gamemode + "&" + token);
+    window.location.assign("https://web010.wifiooe.at/julian/jchess/www/online?=" + gamemode + "&" + token);
     hasRedirected = true;
   }
 });
@@ -493,7 +492,7 @@ function onDrop(source, target) {
 }
 
 resignButton.addEventListener("click", function () {
-  socket.emit("disconnect");
+  socket.emit("playerResigned");
 
   if (playerColor === "white") {
     gameEnd("blackWins");
@@ -532,7 +531,7 @@ function onSnapEnd() {
 }
 
 function changeTrophies(username, trophies) {
-  fetch("../php/updateTrophies.php", {
+  fetch("https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -550,7 +549,7 @@ function changeTrophies(username, trophies) {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`../php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/jchess/www/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {

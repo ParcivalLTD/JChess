@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 $uri = "mysql://avnadmin:AVNS_Ww0zuzpscfo0aQPRXrY@test-ju20gabriel-5cf8.a.aivencloud.com:25251/defaultdb?ssl-mode=REQUIRED";
 
 $fields = parse_url($uri);

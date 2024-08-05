@@ -69,7 +69,7 @@ io.on("connection", async (socket) => {
     console.log(move, fen, room);
   });
 
-  socket.on("disconnect", () => {
+  socket.on("playerResigned", () => {
     usernames.delete(socket.username);
     ips.delete(socket.handshake.address);
     console.log("A user disconnected");
