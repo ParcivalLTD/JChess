@@ -494,8 +494,6 @@ function onDrop(source, target) {
 resignButton.addEventListener("click", function () {
   socket.emit("resign");
 
-  console.log("sds");
-
   if (playerColor === "white") {
     gameEnd("blackWins");
   } else {
