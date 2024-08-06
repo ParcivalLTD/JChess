@@ -22,62 +22,6 @@ function clearError() {
   errorBox.style.color = "#721c24";
 }
 
-/* document.getElementById("hostButton").addEventListener("click", function () {
-  let gameMode = localStorage.getItem("gameModeAbbr");
-  if (gameMode.includes("bot")) {
-    document.getElementById("prvMsg").style.display = "block";
-    return;
-  }
-  const token = generateRandomToken();
-  const link = createPrivateMatchLink(gameMode, token);
-  window.location.assign(link);
-});
-
-document.getElementById("joinToken").addEventListener("input", function () {
-  const joinButton = document.getElementById("joinButton");
-  const token = this.value;
-  checkTokenValidity(token);
-});
-
-document.getElementById("joinButton").addEventListener("click", function () {
-  const token = document.getElementById("joinToken").value;
-  const gameMode = "join";
-  const link = createPrivateMatchLink(gameMode, token);
-  window.location.assign(link);
-});
-
-checkTokenValidity(document.getElementById("joinToken").value); */
-
-function checkTokenValidity(token) {
-  const isValid = /^[A-Z0-9]{5}$/.test(token);
-  joinButton.disabled = !isValid;
-  joinButton.classList.toggle("btn-secondary", !isValid);
-  joinButton.classList.toggle("btn-primary", isValid);
-}
-
-function createPrivateMatchLink(gameMode, token) {
-  const baseUrl = "https://web010.wifiooe.at/julian/JChess/www/online?=";
-  return `${baseUrl}${gameMode}&${token}`;
-}
-
-function generateRandomToken() {
-  const tokenLength = 5;
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const gameModes = ["blz", "pwn", "qvk", "blt", "cl"];
-  let result = "";
-  let containsGameMode;
-
-  do {
-    result = "";
-    for (let i = 0; i < tokenLength; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    containsGameMode = gameModes.some((mode) => result.includes(mode));
-  } while (containsGameMode);
-
-  return result;
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   var selectedTheme = localStorage.getItem("pieceTheme");
   if (selectedTheme) {
@@ -88,13 +32,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.getElementById("pieceTheme").addEventListener("change", function () {
   var pieceTheme = this.value;
-  document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "/wP.svg";
+  document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "wP.svg";
 });
 
 var pieceTheme = localStorage.getItem("pieceTheme");
 if (!pieceTheme) {
   localStorage.setItem("pieceTheme", "../img/chesspieces/tatiana/");
-  document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "/wP.svg";
+  document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "wP.svg";
 }
 
 $("#settingsModal").on("show.bs.modal", function () {
@@ -125,8 +69,8 @@ document.getElementById("saveSettings").addEventListener("click", function () {
 });
 
 document.getElementById("resetColors").addEventListener("click", function () {
-  var defaultLightSquareColor = "#ebd1aa";
-  var defaultDarkSquareColor = "#9a8873";
+  var defaultLightSquareColor = "#f0d9b5";
+  var defaultDarkSquareColor = "#b58863";
 
   document.getElementById("lightSquareColor").value = defaultLightSquareColor;
   document.getElementById("darkSquareColor").value = defaultDarkSquareColor;
@@ -153,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("pieceTheme").value = selectedTheme;
   }
 
-  document.getElementById("piecePreview").src = "img/chesspieces/" + selectedTheme + "/wP.svg";
+  document.getElementById("piecePreview").src = "img/chesspieces/" + selectedTheme + "wP.svg";
 });
 
 let timeout = null;
@@ -499,7 +443,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function checkMainbarVisibility() {
     if (window.innerWidth < 1234 && !path.includes("bot") && !path.includes("online")) {
       mainbar.style.setProperty("display", "none", "important");
-      s;
     } else {
       mainbar.style.display = "";
     }

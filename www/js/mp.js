@@ -240,6 +240,8 @@ socket.on("startGame", ({ room, player1, player2, player1Username, player2Userna
 
   updateEvaluationBar();
   updateTakenPieces();
+
+  board.resize();
 });
 
 socket.on("opponentDisconnected", (message) => {

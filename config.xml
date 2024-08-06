@@ -2,11 +2,27 @@
 <widget id="at.parcivalltd.jchess" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>jchess</name>
     <description>A chess app</description>
-    <author email="juliangabriel570@gmail.com" href="https://cordova.apache.org">
+    <author email="juliangabriel570@gmail.com" href="https://web009.wifiooe.at">
         Julian Gabriel
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <icon src="www/img/logo.png" />
+    <preference name="Orientation" value="portrait" />
+
+    <platform name="android">
+            <preference name="SplashMaintainAspectRatio" value="true"/>
+            <preference name="SplashShowOnlyFirstTime" value="true"/>
+
+            <preference name="AndroidWindowSplashScreenAnimatedIcon" value="www/img/screen/android/splash-square.png"/>
+            <preference name="AndroidWindowSplashScreenBackground" value="#573826"/>
+
+            <splash density="port-ldpi" src="www/img/screen/android/splash-port-ldpi.png"/>
+            <splash density="port-mdpi" src="www/img/screen/android/splash-port-mdpi.png"/>
+            <splash density="port-hdpi" src="www/img/screen/android/splash-port-hdpi.png"/>
+            <splash density="port-xhdpi" src="www/img/screen/android/splash-port-xhdpi.png"/>
+            <splash density="port-xxhdpi" src="www/img/screen/android/splash-port-xxhdpi.png"/>
+            <splash density="port-xxxhdpi" src="www/img/screen/android/splash-port-xxxhdpi.png"/>
+        </platform>
 </widget>

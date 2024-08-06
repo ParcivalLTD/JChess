@@ -167,6 +167,8 @@ function startGame() {
 
   updateEvaluationBar();
   updateTakenPieces();
+
+  board.resize();
 }
 
 document.querySelector("#myBoard").style.display = "none";
