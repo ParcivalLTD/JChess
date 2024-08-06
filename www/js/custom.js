@@ -56,7 +56,7 @@ function checkTokenValidity(token) {
 }
 
 function createPrivateMatchLink(gameMode, token) {
-  const baseUrl = "https://web009.wifiooe.at/online?=";
+  const baseUrl = "https://web010.wifiooe.at/julian/JChess/www/online?=";
   return `${baseUrl}${gameMode}&${token}`;
 }
 
@@ -211,7 +211,7 @@ function login() {
   const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
 
   if (username && password) {
-    fetch("https://web009.wifiooe.at/php/backend.php", {
+    fetch("https://web010.wifiooe.at/julian/JChess/www/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -264,7 +264,7 @@ if (document.getElementById("registerButton")) {
   });
 }
 
-fetch("https://web009.wifiooe.at/php/updateTrophies.php")
+fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
     if (data.status === "success") {
@@ -292,7 +292,7 @@ function register() {
   const password = document.getElementById("registerPassword").value;
 
   if (username && password) {
-    fetch("https://web009.wifiooe.at/php/backend.php", {
+    fetch("https://web010.wifiooe.at/julian/JChess/www/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -336,10 +336,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
   document.querySelectorAll("#logoutButton").forEach((button) => {
     button.addEventListener("click", logout);
   });
-  document.querySelectorAll(".loginlink").forEach((link) => {
+  document.querySelectorAll("#loginlink").forEach((link) => {
     link.addEventListener("click", showLoginForm);
   });
-  document.querySelectorAll(".registerlink").forEach((link) => {
+  document.querySelectorAll("#registerlink").forEach((link) => {
     link.addEventListener("click", showRegisterForm);
   });
 });
@@ -492,13 +492,30 @@ if (localStorage.getItem("gameMode")) {
   updateGameMode("<i class='fa-solid fa-chess-board'></i> Classic");
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const mainbar = document.getElementById("mainbar");
+  const path = window.location.pathname;
+
+  function checkMainbarVisibility() {
+    if (window.innerWidth < 1234 && !path.includes("bot") && !path.includes("online")) {
+      mainbar.style.setProperty("display", "none", "important");
+      s;
+    } else {
+      mainbar.style.display = "";
+    }
+  }
+
+  window.addEventListener("resize", checkMainbarVisibility);
+  checkMainbarVisibility();
+});
+
 function changePassword() {
   var oldPassword = document.getElementById("oldPassword").value;
   var newPassword = document.getElementById("newPassword").value;
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");
   var currentPassword = localStorage.getItem("password") || sessionStorage.getItem("password");
 
-  fetch("https://web009.wifiooe.at/php/change_password.php", {
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/change_password.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -528,7 +545,7 @@ function changePassword() {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://web009.wifiooe.at/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -545,7 +562,7 @@ async function getTrophies(username) {
 
 async function getRanking(username) {
   try {
-    const response = await fetch(`https://web009.wifiooe.at/php/getRanking.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/getRanking.php?username=${username}`);
     const data = await response.json();
 
     if (data) {
@@ -614,7 +631,7 @@ function getCookie(name) {
 updateTheme();
 
 function fetchMessages() {
-  fetch("https://web009.wifiooe.at/php/globalChat.php")
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/globalChat.php")
     .then((response) => response.json())
     .then((data) => {
       document.querySelectorAll("#spinnerGlob21").forEach((el) => (el.style.display = "none"));
@@ -689,7 +706,7 @@ function sendMessage(username, message) {
   document.getElementById("spinnerGlob").style.display = "inline-block";
   document.getElementById("sendGlob").style.display = "none";
 
-  fetch("https://web009.wifiooe.at/php/globalChat.php", {
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/globalChat.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

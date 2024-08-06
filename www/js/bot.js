@@ -315,7 +315,6 @@ function botMove(fen, depth, mode) {
     .then((data) => {
       let bestMoveData = data.data.split(" ");
       let bestMove = bestMoveData[1];
-      console.log(data);
       return bestMove;
     })
     .catch((error) => console.error("Error:", error));
@@ -461,7 +460,7 @@ function onSnapEnd() {
 }
 
 function changeTrophies(username, trophies) {
-  fetch("https://web009.wifiooe.at/php/updateTrophies.php", {
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php", {
     method: "POST",
     body: JSON.stringify({
       username: username,
@@ -476,7 +475,7 @@ function changeTrophies(username, trophies) {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://web009.wifiooe.at/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {

@@ -34,7 +34,7 @@ let hasRedirected = false;
 
 socket.on("gamemode", function (gamemode) {
   if (!hasRedirected) {
-    window.location.assign("https://web009.wifiooe.at/online?=" + gamemode + "&" + token);
+    window.location.assign("https://web010.wifiooe.at/julian/JChess/www/online?=" + gamemode + "&" + token);
     hasRedirected = true;
   }
 });
@@ -59,8 +59,6 @@ window.onload = function () {
 };
 
 function setGamemode(gamemode, data) {
-  console.log(data);
-
   switch (true) {
     case gamemode.includes("blz"):
       whiteTime = 180;
@@ -84,7 +82,6 @@ function setGamemode(gamemode, data) {
   }
 
   if (data.includes("&")) {
-    console.log("Invite link");
     document.querySelector("#loading").appendChild(document.createElement("p")).innerHTML = generateInvitePlayerP();
   }
 }
@@ -204,9 +201,13 @@ function formatTime(seconds) {
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }
 
+document.getElementById("playersDiv").style.display = "block";
+
 socket.on("startGame", ({ room, player1, player2, player1Username, player2Username }) => {
   isMyTurn = player1 === socket.id;
   updatePlayerInfoBackground();
+
+  document.getElementById("playersDiv").style.display = "";
 
   document.getElementById("playersDivSpinner").style.display = "none";
   chatButton.disabled = false;
@@ -243,7 +244,6 @@ socket.on("startGame", ({ room, player1, player2, player1Username, player2Userna
 
 socket.on("opponentDisconnected", (message) => {
   gameEnd(playerColor + "Wins");
-  console.log(message);
 });
 
 socket.on("opponentMove", (data) => {
@@ -532,7 +532,7 @@ function onSnapEnd() {
 }
 
 function changeTrophies(username, trophies) {
-  fetch("https://web009.wifiooe.at/php/updateTrophies.php", {
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php", {
     method: "POST",
     body: JSON.stringify({
       username: username,
@@ -547,7 +547,7 @@ function changeTrophies(username, trophies) {
 
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://web009.wifiooe.at/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
