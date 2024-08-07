@@ -32,6 +32,7 @@ cordova build
 ```
 
 Or you can download pre-built versions from the releases.
+(also including the apk file)
 
 ## Project Structure
 
