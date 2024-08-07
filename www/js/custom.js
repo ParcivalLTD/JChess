@@ -1,3 +1,4 @@
+//error messages for authentication
 function showError(message) {
   const errorBox = document.getElementById("errorBox");
   errorBox.textContent = message;
@@ -22,6 +23,7 @@ function clearError() {
   errorBox.style.color = "#721c24";
 }
 
+//piece theme settings for chessboard
 document.addEventListener("DOMContentLoaded", function () {
   var selectedTheme = localStorage.getItem("pieceTheme");
   if (selectedTheme) {
@@ -33,6 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("pieceTheme").addEventListener("change", function () {
   var pieceTheme = this.value;
   document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "wP.svg";
+
+  localStorage.setItem("pieceTheme", "../img/chesspieces/" + this.value);
 });
 
 var pieceTheme = localStorage.getItem("pieceTheme");
@@ -41,6 +45,7 @@ if (!pieceTheme) {
   document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "wP.svg";
 }
 
+//load settings into the modal
 $("#settingsModal").on("show.bs.modal", function () {
   var lightSquareColor = localStorage.getItem("lightSquareColor");
   var darkSquareColor = localStorage.getItem("darkSquareColor");
@@ -60,6 +65,7 @@ $("#settingsModal").on("show.bs.modal", function () {
   }
 });
 
+//save settings
 document.getElementById("saveSettings").addEventListener("click", function () {
   var lightSquareColor = document.getElementById("lightSquareColor").value;
   var darkSquareColor = document.getElementById("darkSquareColor").value;
@@ -68,6 +74,7 @@ document.getElementById("saveSettings").addEventListener("click", function () {
   $("#settingsModal").modal("hide");
 });
 
+//reset the board color settings when the reset button is clicked
 document.getElementById("resetColors").addEventListener("click", function () {
   var defaultLightSquareColor = "#f0d9b5";
   var defaultDarkSquareColor = "#b58863";
@@ -79,32 +86,12 @@ document.getElementById("resetColors").addEventListener("click", function () {
   localStorage.setItem("darkSquareColor", defaultDarkSquareColor);
 });
 
-document.getElementById("pieceTheme").addEventListener("change", function () {
-  localStorage.setItem("pieceTheme", "../img/chesspieces/" + this.value);
-});
-
-document.onload = function () {
-  var pieceTheme = localStorage.getItem("pieceTheme");
-  if (!pieceTheme) {
-    localStorage.setItem("pieceTheme", "../img/chesspieces/tatiana");
-  }
-};
-
-document.addEventListener("DOMContentLoaded", function () {
-  var selectedTheme = localStorage.getItem("pieceTheme");
-  if (selectedTheme) {
-    selectedTheme = selectedTheme.replace("../img/chesspieces/", "");
-    document.getElementById("pieceTheme").value = selectedTheme;
-  }
-
-  document.getElementById("piecePreview").src = "img/chesspieces/" + selectedTheme + "wP.svg";
-});
-
 let timeout = null;
 let profilePictureDiv = document.getElementById("profilePicture");
 let pfpPrevDiv = document.getElementById("pfpPrevDiv");
 pfpPrevDiv.style.display = "none";
 
+//update the profile picture preview when the username input changes
 document.getElementById("registerUsername").addEventListener("input", function (e) {
   clearTimeout(timeout);
 
@@ -146,6 +133,7 @@ document.getElementById("registerUsername").addEventListener("input", function (
   }, 500);
 });
 
+//login function
 function login() {
   clearError();
   document.getElementById("loginSpinner").style.display = "inline-block";
@@ -193,6 +181,7 @@ function login() {
   }
 }
 
+//event listener for the login and register buttons when the enter key is pressed
 if (document.getElementById("loginButton")) {
   document.getElementById("loginPassword").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -208,6 +197,7 @@ if (document.getElementById("registerButton")) {
   });
 }
 
+//fetch top users
 fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
@@ -227,6 +217,7 @@ fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php")
     console.error("Error:", error);
   });
 
+//register function
 function register() {
   clearError();
 
@@ -267,15 +258,15 @@ function register() {
   }
 }
 
-const getElement = (id) => document.getElementById(id);
-
+//toggle the display of an element
 function toggleDisplay(id, state) {
-  const element = getElement(id);
+  const element = document.getElementById(id);
   if (element) {
     element.style.display = state;
   }
 }
 
+//add event listeners to the logout button and the login and register links
 document.addEventListener("DOMContentLoaded", (event) => {
   document.querySelectorAll("#logoutButton").forEach((button) => {
     button.addEventListener("click", logout);
@@ -288,6 +279,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
+//logout function
 function logout() {
   localStorage.clear();
   document.querySelectorAll("#logoutButton").forEach((button) => {
@@ -296,6 +288,7 @@ function logout() {
   showLoginPopup();
 }
 
+// close the login popup and show the logout button
 function closeLoginPopup() {
   var loginModal = document.getElementById("loginModal");
   var bootstrapModal = bootstrap.Modal.getInstance(loginModal);
@@ -306,6 +299,7 @@ function closeLoginPopup() {
   updateUserInfo();
 }
 
+//show the login form and hide the register form
 function showLoginForm() {
   toggleDisplay("loginFormRow", "block");
   toggleDisplay("registerFormRow", "none");
@@ -313,6 +307,7 @@ function showLoginForm() {
   clearError();
 }
 
+//show the register form and hide the login form
 function showRegisterForm() {
   toggleDisplay("loginFormRow", "none");
   toggleDisplay("registerFormRow", "block");
@@ -329,6 +324,7 @@ function setModalLabel(labelText) {
   }
 }
 
+//show the login popup if no user is logged in
 document.addEventListener("DOMContentLoaded", function () {
   const username = localStorage.getItem("username") || sessionStorage.getItem("username");
   const password = localStorage.getItem("password") || sessionStorage.getItem("password");
@@ -342,12 +338,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function showLoginPopup() {
-  const loginModal = new bootstrap.Modal(getElement("loginModal"));
+  const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
   if (loginModal) {
     loginModal.show();
   }
 }
 
+//configure different game modes
 function updateGameMode(gameMode) {
   document.querySelectorAll("#mainHeader").forEach((header) => (header.innerHTML = gameMode));
 
@@ -425,6 +422,7 @@ for (var i = 0; i < dropdownItems.length; i++) {
 var onlineItem = document.querySelector("#online");
 onlineItem.classList.add("active");
 
+//also update the game mode when the page is reloaded
 if (localStorage.getItem("gameMode")) {
   var savedGameMode = localStorage.getItem("gameMode");
   if (savedGameMode) {
@@ -436,6 +434,7 @@ if (localStorage.getItem("gameMode")) {
   updateGameMode("<i class='fa-solid fa-chess-board'></i> Classic");
 }
 
+//hide the mainbar on smaller screens (for the mobile bar)
 document.addEventListener("DOMContentLoaded", function () {
   const mainbar = document.getElementById("mainbar");
   const path = window.location.pathname;
@@ -452,40 +451,7 @@ document.addEventListener("DOMContentLoaded", function () {
   checkMainbarVisibility();
 });
 
-function changePassword() {
-  var oldPassword = document.getElementById("oldPassword").value;
-  var newPassword = document.getElementById("newPassword").value;
-  let username = localStorage.getItem("username") || sessionStorage.getItem("username");
-  var currentPassword = localStorage.getItem("password") || sessionStorage.getItem("password");
-
-  fetch("https://web010.wifiooe.at/julian/JChess/www/php/change_password.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: "oldPassword=" + encodeURIComponent(oldPassword) + "&newPassword=" + encodeURIComponent(newPassword) + "&username=" + encodeURIComponent(username) + "&currentPassword=" + encodeURIComponent(currentPassword),
-  })
-    .then((response) => response.text())
-    .then((data) => {
-      let errorbox = document.getElementById("settingsResponseMessage");
-      errorbox.innerHTML = data;
-      errorbox.style.display = "block";
-      if (data.includes("success")) {
-        errorbox.style.backgroundColor = "#d4edda";
-        errorbox.style.borderColor = "#c3e6cb";
-        errorbox.style.color = "#155724";
-        if (localStorage.getItem("username")) {
-          localStorage.setItem("password", newPassword);
-        } else {
-          sessionStorage.setItem("password", newPassword);
-        }
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
-
+//fetch the user's trophies and ranking
 async function getTrophies(username) {
   try {
     const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
@@ -520,6 +486,7 @@ async function getRanking(username) {
   }
 }
 
+//update the user info in the mainbar
 async function updateUserInfo() {
   const username = localStorage.getItem("username") || sessionStorage.getItem("username");
   document.querySelectorAll("#playerUsername").forEach((el) => (el.textContent = username));
@@ -542,6 +509,7 @@ async function updateUserInfo() {
 updateUserInfo();
 document.querySelector(".main-container").style.right = "82px";
 
+//set the theme based on the user's preferences
 document.getElementById("mode-switcher").addEventListener("click", function () {
   const currentMode = document.documentElement.getAttribute("data-theme");
   const newMode = currentMode === "dark" ? "light" : "dark";
@@ -573,6 +541,7 @@ function getCookie(name) {
 
 updateTheme();
 
+//fetch the global chat messages and display them
 function fetchMessages() {
   fetch("https://web010.wifiooe.at/julian/JChess/www/php/globalChat.php")
     .then((response) => response.json())
@@ -612,6 +581,7 @@ function fetchMessages() {
 
 fetchMessages();
 
+//escape HTML characters for security in the chat
 function escapeHTML(str) {
   return str
     .replace(/&/g, "&amp;")
@@ -625,6 +595,7 @@ function escapeHTML(str) {
     .replace(/<\/iframe>/g, "&lt;/iframe&gt;");
 }
 
+//sanitize the chat messages
 function sanitizeMessage(message) {
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = message;
@@ -643,6 +614,7 @@ function sanitizeMessage(message) {
   return tempDiv.innerHTML;
 }
 
+//send a message to the global chat
 function sendMessage(username, message) {
   if (document.getElementById("globMessage").value.trim() === "") return;
 
@@ -668,6 +640,7 @@ function sendMessage(username, message) {
     });
 }
 
+//event listeners for the chat
 let sendButton = document.getElementById("sendButton");
 sendButton.addEventListener("click", function () {
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");
@@ -712,6 +685,7 @@ sendButton.disabled = true;
 sendButton.classList.add("btn-secondary");
 sendButton.classList.remove("btn-primary");
 
+//store the user's cookie preferences
 window.onload = function () {
   if (!localStorage.getItem("cookiesAccepted")) {
     $("#cookieModal").modal("show");
