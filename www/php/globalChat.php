@@ -1,5 +1,3 @@
-username VARCHAR(255) NOT NULL,
-
 <?php
 
 include_once('connection.php');
