@@ -1,3 +1,4 @@
+//error messages for authentication
 function showError(message) {
   const errorBox = document.getElementById("errorBox");
   errorBox.textContent = message;
@@ -22,62 +23,7 @@ function clearError() {
   errorBox.style.color = "#721c24";
 }
 
-/* document.getElementById("hostButton").addEventListener("click", function () {
-  let gameMode = localStorage.getItem("gameModeAbbr");
-  if (gameMode.includes("bot")) {
-    document.getElementById("prvMsg").style.display = "block";
-    return;
-  }
-  const token = generateRandomToken();
-  const link = createPrivateMatchLink(gameMode, token);
-  window.location.assign(link);
-});
-
-document.getElementById("joinToken").addEventListener("input", function () {
-  const joinButton = document.getElementById("joinButton");
-  const token = this.value;
-  checkTokenValidity(token);
-});
-
-document.getElementById("joinButton").addEventListener("click", function () {
-  const token = document.getElementById("joinToken").value;
-  const gameMode = "join";
-  const link = createPrivateMatchLink(gameMode, token);
-  window.location.assign(link);
-});
-
-checkTokenValidity(document.getElementById("joinToken").value); */
-
-function checkTokenValidity(token) {
-  const isValid = /^[A-Z0-9]{5}$/.test(token);
-  joinButton.disabled = !isValid;
-  joinButton.classList.toggle("btn-secondary", !isValid);
-  joinButton.classList.toggle("btn-primary", isValid);
-}
-
-function createPrivateMatchLink(gameMode, token) {
-  const baseUrl = "https://wavebeef.com/projects/jchess/online?=";
-  return `${baseUrl}${gameMode}&${token}`;
-}
-
-function generateRandomToken() {
-  const tokenLength = 5;
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  const gameModes = ["blz", "pwn", "qvk", "blt", "cl"];
-  let result = "";
-  let containsGameMode;
-
-  do {
-    result = "";
-    for (let i = 0; i < tokenLength; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    containsGameMode = gameModes.some((mode) => result.includes(mode));
-  } while (containsGameMode);
-
-  return result;
-}
-
+//piece theme settings for chessboard
 document.addEventListener("DOMContentLoaded", function () {
   var selectedTheme = localStorage.getItem("pieceTheme");
   if (selectedTheme) {
@@ -88,15 +34,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.getElementById("pieceTheme").addEventListener("change", function () {
   var pieceTheme = this.value;
-  document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "/wP.svg";
+  document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "wP.svg";
+
+  localStorage.setItem("pieceTheme", "../img/chesspieces/" + this.value);
 });
 
 var pieceTheme = localStorage.getItem("pieceTheme");
 if (!pieceTheme) {
   localStorage.setItem("pieceTheme", "../img/chesspieces/tatiana/");
-  document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "/wP.svg";
+  document.getElementById("piecePreview").src = "img/chesspieces/" + pieceTheme + "wP.svg";
 }
 
+//load settings into the modal
 $("#settingsModal").on("show.bs.modal", function () {
   var lightSquareColor = localStorage.getItem("lightSquareColor");
   var darkSquareColor = localStorage.getItem("darkSquareColor");
@@ -116,6 +65,7 @@ $("#settingsModal").on("show.bs.modal", function () {
   }
 });
 
+//save settings
 document.getElementById("saveSettings").addEventListener("click", function () {
   var lightSquareColor = document.getElementById("lightSquareColor").value;
   var darkSquareColor = document.getElementById("darkSquareColor").value;
@@ -124,9 +74,10 @@ document.getElementById("saveSettings").addEventListener("click", function () {
   $("#settingsModal").modal("hide");
 });
 
+//reset the board color settings when the reset button is clicked
 document.getElementById("resetColors").addEventListener("click", function () {
-  var defaultLightSquareColor = "#ebd1aa";
-  var defaultDarkSquareColor = "#9a8873";
+  var defaultLightSquareColor = "#f0d9b5";
+  var defaultDarkSquareColor = "#b58863";
 
   document.getElementById("lightSquareColor").value = defaultLightSquareColor;
   document.getElementById("darkSquareColor").value = defaultDarkSquareColor;
@@ -135,32 +86,12 @@ document.getElementById("resetColors").addEventListener("click", function () {
   localStorage.setItem("darkSquareColor", defaultDarkSquareColor);
 });
 
-document.getElementById("pieceTheme").addEventListener("change", function () {
-  localStorage.setItem("pieceTheme", "../img/chesspieces/" + this.value);
-});
-
-document.onload = function () {
-  var pieceTheme = localStorage.getItem("pieceTheme");
-  if (!pieceTheme) {
-    localStorage.setItem("pieceTheme", "../img/chesspieces/tatiana");
-  }
-};
-
-document.addEventListener("DOMContentLoaded", function () {
-  var selectedTheme = localStorage.getItem("pieceTheme");
-  if (selectedTheme) {
-    selectedTheme = selectedTheme.replace("../img/chesspieces/", "");
-    document.getElementById("pieceTheme").value = selectedTheme;
-  }
-
-  document.getElementById("piecePreview").src = "img/chesspieces/" + selectedTheme + "/wP.svg";
-});
-
 let timeout = null;
 let profilePictureDiv = document.getElementById("profilePicture");
 let pfpPrevDiv = document.getElementById("pfpPrevDiv");
 pfpPrevDiv.style.display = "none";
 
+//update the profile picture preview when the username input changes
 document.getElementById("registerUsername").addEventListener("input", function (e) {
   clearTimeout(timeout);
 
@@ -202,6 +133,7 @@ document.getElementById("registerUsername").addEventListener("input", function (
   }, 500);
 });
 
+//login function
 function login() {
   clearError();
   document.getElementById("loginSpinner").style.display = "inline-block";
@@ -211,7 +143,7 @@ function login() {
   const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
 
   if (username && password) {
-    fetch("https://wavebeef.duckdns.org/projects/jchess/php/backend.php", {
+    fetch("https://web010.wifiooe.at/julian/JChess/www/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -249,6 +181,7 @@ function login() {
   }
 }
 
+//event listener for the login and register buttons when the enter key is pressed
 if (document.getElementById("loginButton")) {
   document.getElementById("loginPassword").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -264,7 +197,8 @@ if (document.getElementById("registerButton")) {
   });
 }
 
-fetch("https://wavebeef.duckdns.org/projects/jchess/php/updateTrophies.php")
+//fetch top users
+fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
     if (data.status === "success") {
@@ -283,6 +217,7 @@ fetch("https://wavebeef.duckdns.org/projects/jchess/php/updateTrophies.php")
     console.error("Error:", error);
   });
 
+//register function
 function register() {
   clearError();
 
@@ -292,7 +227,7 @@ function register() {
   const password = document.getElementById("registerPassword").value;
 
   if (username && password) {
-    fetch("https://wavebeef.duckdns.org/projects/jchess/php/backend.php", {
+    fetch("https://web010.wifiooe.at/julian/JChess/www/php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -323,27 +258,37 @@ function register() {
   }
 }
 
-const getElement = (id) => document.getElementById(id);
-
+//toggle the display of an element
 function toggleDisplay(id, state) {
-  const element = getElement(id);
+  const element = document.getElementById(id);
   if (element) {
     element.style.display = state;
   }
 }
 
+//add event listeners to the logout button and the login and register links
 document.addEventListener("DOMContentLoaded", (event) => {
-  document.getElementById("logoutButton").addEventListener("click", logout);
-  document.getElementById("loginlink").addEventListener("click", showLoginForm);
-  document.getElementById("registerlink").addEventListener("click", showRegisterForm);
+  document.querySelectorAll("#logoutButton").forEach((button) => {
+    button.addEventListener("click", logout);
+  });
+  document.querySelectorAll("#loginlink").forEach((link) => {
+    link.addEventListener("click", showLoginForm);
+  });
+  document.querySelectorAll("#registerlink").forEach((link) => {
+    link.addEventListener("click", showRegisterForm);
+  });
 });
 
+//logout function
 function logout() {
   localStorage.clear();
-  logoutButton.style.display = "none";
+  document.querySelectorAll("#logoutButton").forEach((button) => {
+    button.style.display = "none";
+  });
   showLoginPopup();
 }
 
+// close the login popup and show the logout button
 function closeLoginPopup() {
   var loginModal = document.getElementById("loginModal");
   var bootstrapModal = bootstrap.Modal.getInstance(loginModal);
@@ -354,6 +299,7 @@ function closeLoginPopup() {
   updateUserInfo();
 }
 
+//show the login form and hide the register form
 function showLoginForm() {
   toggleDisplay("loginFormRow", "block");
   toggleDisplay("registerFormRow", "none");
@@ -361,6 +307,7 @@ function showLoginForm() {
   clearError();
 }
 
+//show the register form and hide the login form
 function showRegisterForm() {
   toggleDisplay("loginFormRow", "none");
   toggleDisplay("registerFormRow", "block");
@@ -377,6 +324,7 @@ function setModalLabel(labelText) {
   }
 }
 
+//show the login popup if no user is logged in
 document.addEventListener("DOMContentLoaded", function () {
   const username = localStorage.getItem("username") || sessionStorage.getItem("username");
   const password = localStorage.getItem("password") || sessionStorage.getItem("password");
@@ -390,12 +338,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function showLoginPopup() {
-  const loginModal = new bootstrap.Modal(getElement("loginModal"));
+  const loginModal = new bootstrap.Modal(document.getElementById("loginModal"));
   if (loginModal) {
     loginModal.show();
   }
 }
 
+//configure different game modes
 function updateGameMode(gameMode) {
   document.querySelectorAll("#mainHeader").forEach((header) => (header.innerHTML = gameMode));
 
@@ -403,22 +352,22 @@ function updateGameMode(gameMode) {
     playButton.onclick = function () {
       switch (true) {
         case gameMode.includes("Classic"):
-          window.location.href = "online/?=" + "cl";
+          window.location.href = "online/index.html?=" + "cl";
           break;
         case gameMode.includes("Bot"):
           window.location.href = "bot/index.html";
           break;
         case gameMode.includes("Blitz"):
-          window.location.href = "online/?=" + "blz";
+          window.location.href = "online/index.html?=" + "blz";
           break;
         case gameMode.includes("Pawn Endgame"):
-          window.location.href = "online/?=" + "pwn";
+          window.location.href = "online/index.html?=" + "pwn";
           break;
         case gameMode.includes("Q vs N"):
-          window.location.href = "online/?=" + "qvk";
+          window.location.href = "online/index.html?=" + "qvk";
           break;
         case gameMode.includes("Bullet"):
-          window.location.href = "online/?=" + "blt";
+          window.location.href = "online/index.html?=" + "blt";
         default:
           break;
       }
@@ -473,6 +422,7 @@ for (var i = 0; i < dropdownItems.length; i++) {
 var onlineItem = document.querySelector("#online");
 onlineItem.classList.add("active");
 
+//also update the game mode when the page is reloaded
 if (localStorage.getItem("gameMode")) {
   var savedGameMode = localStorage.getItem("gameMode");
   if (savedGameMode) {
@@ -484,43 +434,27 @@ if (localStorage.getItem("gameMode")) {
   updateGameMode("<i class='fa-solid fa-chess-board'></i> Classic");
 }
 
-function changePassword() {
-  var oldPassword = document.getElementById("oldPassword").value;
-  var newPassword = document.getElementById("newPassword").value;
-  let username = localStorage.getItem("username") || sessionStorage.getItem("username");
-  var currentPassword = localStorage.getItem("password") || sessionStorage.getItem("password");
+//hide the mainbar on smaller screens (for the mobile bar)
+document.addEventListener("DOMContentLoaded", function () {
+  const mainbar = document.getElementById("mainbar");
+  const path = window.location.pathname;
 
-  fetch("https://wavebeef.duckdns.org/projects/jchess/php/change_password.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: "oldPassword=" + encodeURIComponent(oldPassword) + "&newPassword=" + encodeURIComponent(newPassword) + "&username=" + encodeURIComponent(username) + "&currentPassword=" + encodeURIComponent(currentPassword),
-  })
-    .then((response) => response.text())
-    .then((data) => {
-      let errorbox = document.getElementById("settingsResponseMessage");
-      errorbox.innerHTML = data;
-      errorbox.style.display = "block";
-      if (data.includes("success")) {
-        errorbox.style.backgroundColor = "#d4edda";
-        errorbox.style.borderColor = "#c3e6cb";
-        errorbox.style.color = "#155724";
-        if (localStorage.getItem("username")) {
-          localStorage.setItem("password", newPassword);
-        } else {
-          sessionStorage.setItem("password", newPassword);
-        }
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
+  function checkMainbarVisibility() {
+    if (window.innerWidth < 1234 && !path.includes("bot") && !path.includes("online")) {
+      mainbar.style.setProperty("display", "none", "important");
+    } else {
+      mainbar.style.display = "";
+    }
+  }
 
+  window.addEventListener("resize", checkMainbarVisibility);
+  checkMainbarVisibility();
+});
+
+//fetch the user's trophies and ranking
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://wavebeef.duckdns.org/projects/jchess/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -537,7 +471,7 @@ async function getTrophies(username) {
 
 async function getRanking(username) {
   try {
-    const response = await fetch(`https://wavebeef.duckdns.org/projects/jchess/php/getRanking.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/getRanking.php?username=${username}`);
     const data = await response.json();
 
     if (data) {
@@ -552,6 +486,7 @@ async function getRanking(username) {
   }
 }
 
+//update the user info in the mainbar
 async function updateUserInfo() {
   const username = localStorage.getItem("username") || sessionStorage.getItem("username");
   document.querySelectorAll("#playerUsername").forEach((el) => (el.textContent = username));
@@ -574,6 +509,7 @@ async function updateUserInfo() {
 updateUserInfo();
 document.querySelector(".main-container").style.right = "82px";
 
+//set the theme based on the user's preferences
 document.getElementById("mode-switcher").addEventListener("click", function () {
   const currentMode = document.documentElement.getAttribute("data-theme");
   const newMode = currentMode === "dark" ? "light" : "dark";
@@ -605,8 +541,9 @@ function getCookie(name) {
 
 updateTheme();
 
+//fetch the global chat messages and display them
 function fetchMessages() {
-  fetch("https://wavebeef.duckdns.org/projects/jchess/php/globalChat.php")
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/globalChat.php")
     .then((response) => response.json())
     .then((data) => {
       document.querySelectorAll("#spinnerGlob21").forEach((el) => (el.style.display = "none"));
@@ -614,13 +551,23 @@ function fetchMessages() {
       chats.forEach((chat) => {
         chat.innerHTML = "";
         let div = document.createElement("div");
-        div.innerHTML = "<span style='color: grey; margin-left: 92.5px'>...</span><br><br>";
+        div.textContent = "...";
+        div.style.color = "grey";
+        div.style.marginLeft = "92.5px";
         chat.appendChild(div);
         data.reverse();
         for (let message of data) {
           let div = document.createElement("div");
           div.className = "globMessage-block";
-          div.innerHTML = "<span id='globUser'><i class='fa-solid fa-user'></i>" + message.username + "</span> <br> <span id='globMsg'>" + message.message + "</span>";
+          let userSpan = document.createElement("span");
+          userSpan.id = "globUser";
+          userSpan.innerHTML = "<i class='fa-solid fa-user'></i> " + message.username;
+          let msgSpan = document.createElement("span");
+          msgSpan.id = "globMsg";
+          msgSpan.textContent = message.message;
+          div.appendChild(userSpan);
+          div.appendChild(document.createElement("br"));
+          div.appendChild(msgSpan);
           chat.appendChild(div);
         }
         let isAtBottom = chat.scrollTop + chat.clientHeight === chat.scrollHeight;
@@ -634,62 +581,71 @@ function fetchMessages() {
 
 fetchMessages();
 
-async function censorMessage(message) {
-  const url = "https://corsproxy.io/?https://neutrinoapi.net/bad-word-filter";
-  const options = {
-    method: "POST",
-    headers: {
-      "User-ID": "parcivalltd",
-      "API-Key": "P8Zq9n2ePQxftphrbCKiyUAEH5WfvsBiRQidluQwtswGmDrY",
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      "censor-character": "*",
-      catalog: "strict",
-      content: message,
-    }),
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    return result["censored-content"];
-  } catch (error) {
-    console.error(error);
-  }
+//escape HTML characters for security in the chat
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;")
+    .replace(/<img/g, "&lt;img")
+    .replace(/<\/img>/g, "&lt;/img&gt;")
+    .replace(/<iframe/g, "&lt;iframe")
+    .replace(/<\/iframe>/g, "&lt;/iframe&gt;");
 }
 
+//sanitize the chat messages
+function sanitizeMessage(message) {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = message;
+
+  const iframes = tempDiv.getElementsByTagName("iframe");
+  const images = tempDiv.getElementsByTagName("img");
+
+  while (iframes.length > 0) {
+    iframes[0].parentNode.removeChild(iframes[0]);
+  }
+
+  while (images.length > 0) {
+    images[0].parentNode.removeChild(images[0]);
+  }
+
+  return tempDiv.innerHTML;
+}
+
+//send a message to the global chat
 function sendMessage(username, message) {
   if (document.getElementById("globMessage").value.trim() === "") return;
 
   document.getElementById("spinnerGlob").style.display = "inline-block";
   document.getElementById("sendGlob").style.display = "none";
 
-  censorMessage(message).then((censoredMessage) => {
-    fetch("https://wavebeef.duckdns.org/projects/jchess/php/globalChat.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "username=" + encodeURIComponent(username) + "&message=" + encodeURIComponent(censoredMessage),
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/globalChat.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "username=" + encodeURIComponent(username) + "&message=" + encodeURIComponent(message),
+  })
+    .then(() => fetchMessages())
+    .then(() => {
+      document.getElementById("spinnerGlob").style.display = "none";
+      document.getElementById("sendGlob").style.display = "inline-block";
     })
-      .then(() => fetchMessages())
-      .then(() => {
-        document.getElementById("spinnerGlob").style.display = "none";
-        document.getElementById("sendGlob").style.display = "inline-block";
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        document.getElementById("spinnerGlob").style.display = "none";
-        document.getElementById("sendGlob").style.display = "inline-block";
-      });
-  });
+    .catch((error) => {
+      console.error("Error:", error);
+      document.getElementById("spinnerGlob").style.display = "none";
+      document.getElementById("sendGlob").style.display = "inline-block";
+    });
 }
+
+//event listeners for the chat
 let sendButton = document.getElementById("sendButton");
 sendButton.addEventListener("click", function () {
   let username = localStorage.getItem("username") || sessionStorage.getItem("username");
   let message = document.getElementById("globMessage").value;
-  sendMessage(username, message);
+  sendMessage(username, sanitizeMessage(escapeHTML(message)));
   messageInput.value = "";
   fetchMessages();
 });
@@ -729,6 +685,7 @@ sendButton.disabled = true;
 sendButton.classList.add("btn-secondary");
 sendButton.classList.remove("btn-primary");
 
+//store the user's cookie preferences
 window.onload = function () {
   if (!localStorage.getItem("cookiesAccepted")) {
     $("#cookieModal").modal("show");

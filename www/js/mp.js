@@ -34,12 +34,12 @@ let hasRedirected = false;
 
 socket.on("gamemode", function (gamemode) {
   if (!hasRedirected) {
-    console.log("Redirecting to: " + "https://wavebeef.com/projects/jchess/online?=" + gamemode + "&" + token);
-    window.location.assign("https://wavebeef.com/projects/jchess/online?=" + gamemode + "&" + token);
+    window.location.assign("https://web010.wifiooe.at/julian/JChess/www/online?=" + gamemode + "&" + token);
     hasRedirected = true;
   }
 });
 
+//set up the board and player data
 window.onload = function () {
   setGamemode(gameMode, data);
 
@@ -59,9 +59,8 @@ window.onload = function () {
   }
 };
 
+//set up the pieces and time based on the gamemode
 function setGamemode(gamemode, data) {
-  console.log(data);
-
   switch (true) {
     case gamemode.includes("blz"):
       whiteTime = 180;
@@ -85,19 +84,11 @@ function setGamemode(gamemode, data) {
   }
 
   if (data.includes("&")) {
-    console.log("Invite link");
     document.querySelector("#loading").appendChild(document.createElement("p")).innerHTML = generateInvitePlayerP();
   }
 }
 
-function generateInvitePlayerP() {
-  let parts = data.split("&");
-  let beforeAnd = parts[0];
-  let afterAnd = parts[1];
-  let pInnerHTML = "Your friend can join by entering the code or clicking on the link below:<br><br>" + "<t style='font-weight: bold; font-size: 20px;'>" + afterAnd + "</t><br><br>" + "<a>" + window.location.href + "</a><br><br>";
-  return pInnerHTML;
-}
-
+//style the turn indicator and timer based on the turn
 function updatePlayerInfoBackground() {
   if (isMyTurn) {
     document.getElementById("playerInfo").classList.add("activeTurn");
@@ -118,6 +109,7 @@ function updatePlayerInfoBackground() {
 
 let gameEnded = false;
 
+//end the game and show the result
 async function gameEnd(result) {
   if (gameEnded) return;
 
@@ -174,6 +166,7 @@ async function gameEnd(result) {
   gameEndModal.show();
 }
 
+//start the timer and update the time every second
 function startTimer() {
   intervalId = setInterval(function () {
     if (game.turn() === "w") {
@@ -199,15 +192,21 @@ function startTimer() {
   }, 1000);
 }
 
+// format the time to mm:ss
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   seconds = seconds % 60;
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }
 
+document.getElementById("playersDiv").style.display = "block";
+
+//when starting the game, show the board and player info
 socket.on("startGame", ({ room, player1, player2, player1Username, player2Username }) => {
   isMyTurn = player1 === socket.id;
   updatePlayerInfoBackground();
+
+  document.getElementById("playersDiv").style.display = "";
 
   document.getElementById("playersDivSpinner").style.display = "none";
   chatButton.disabled = false;
@@ -240,12 +239,16 @@ socket.on("startGame", ({ room, player1, player2, player1Username, player2Userna
 
   updateEvaluationBar();
   updateTakenPieces();
+
+  board.resize();
 });
 
+//when the opponent disconnects, end the game
 socket.on("opponentDisconnected", (message) => {
   gameEnd(playerColor + "Wins");
 });
 
+//update the board based on the opponent's move and update the turn
 socket.on("opponentMove", (data) => {
   game.load(data.fen);
   board.position(game.fen());
@@ -284,10 +287,7 @@ socket.on("opponentMove", (data) => {
   return;
 });
 
-socket.on("error", (message) => {
-  //document.querySelector(".main-container").innerHTML = message;
-});
-
+//calculate the value of the pieces on the board
 function calculatePieceValue(fen, color) {
   const board = fen.split(" ")[0];
   let pieceValue = 0;
@@ -340,6 +340,7 @@ function calculatePieceValue(fen, color) {
   return pieceValue;
 }
 
+//update the taken pieces of both players
 function updateTakenPieces() {
   let whiteValue = calculatePieceValue(game.fen(), "white");
   let blackValue = calculatePieceValue(game.fen(), "black");
@@ -368,11 +369,13 @@ document.querySelector("#myBoard").style.display = "none";
 document.querySelector("#playerInfo").style.display = "none";
 document.querySelector("#enemyInfo").style.display = "none";
 
+//always show the latest moves
 function scrollToBottom() {
   var movesContainer = document.getElementById("moves-container");
   movesContainer.scrollTop = movesContainer.scrollHeight;
 }
 
+//update the moves list
 function updateMoves(move) {
   document.getElementById("info").innerHTML = "";
   var moveColor = game.turn() === "w" ? "white-moves" : "black-moves";
@@ -386,6 +389,7 @@ function updateMoves(move) {
   scrollToBottom();
 }
 
+//get the evaluation of the current position
 function getEvaluation(fen) {
   return fetch(`https://stockfish.online/api/stockfish.php?fen=${fen}&depth=13&mode=eval`)
     .then((response) => response.json())
@@ -396,6 +400,7 @@ function getEvaluation(fen) {
     .catch((error) => console.error("Error:", error));
 }
 
+//update the evaluation bar based on the evaluation
 function updateEvaluationBar() {
   const evaluationBar = document.getElementById("evaluation-value");
   evaluationBar.style.transition = "height 0.5s ease";
@@ -424,6 +429,7 @@ function greySquare(square) {
   }
 }
 
+//remove the grey squares
 function removeGreySquares() {
   $("#myBoard .square-55d63").removeClass("grey-square");
   $("#myBoard .black-3c85d").removeClass("grey-square");
@@ -431,6 +437,7 @@ function removeGreySquares() {
   $("#myBoard .square-55d63").removeClass("enemy-square");
 }
 
+//update square class
 function updateSquareClass(square) {
   var $square = $("#myBoard .square-" + square);
   if (game.get(square) && game.get(square).color === "b") {
@@ -444,6 +451,7 @@ function removeHighlights(color) {
   $board.find("." + squareClass).removeClass("highlight-" + color);
 }
 
+//manage the drag and drop of the pieces and setting the turn
 function onDragStart(source, piece, position, orientation) {
   if (game.game_over()) return false;
 
@@ -492,8 +500,9 @@ function onDrop(source, target) {
   updatePlayerInfoBackground();
 }
 
+//end the game when the player resigns
 resignButton.addEventListener("click", function () {
-  socket.emit("disconnect");
+  socket.emit("resign");
 
   if (playerColor === "white") {
     gameEnd("blackWins");
@@ -502,6 +511,7 @@ resignButton.addEventListener("click", function () {
   }
 });
 
+//when the player closes the tab or leaves the app, end the game
 window.onbeforeunload = function () {
   if (playerColor === "white") {
     gameEnd("blackWins");
@@ -514,6 +524,7 @@ function onMoveEnd() {
   $board.find(".square-" + squareToHighlight).addClass("highlight-black");
 }
 
+//check if the player is in checkmate or draw
 function onSnapEnd() {
   board.position(game.fen());
 
@@ -531,12 +542,10 @@ function onSnapEnd() {
   }
 }
 
+//function to change the trophies of a player
 function changeTrophies(username, trophies) {
-  fetch("../php/updateTrophies.php", {
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({
       username: username,
       trophies: trophies,
@@ -548,9 +557,10 @@ function changeTrophies(username, trophies) {
     });
 }
 
+//function to get the trophies of a player
 async function getTrophies(username) {
   try {
-    const response = await fetch(`../php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -565,6 +575,7 @@ async function getTrophies(username) {
   }
 }
 
+//show the possible moves of a piece when hovering over it
 function onMouseoverSquare(square, piece) {
   var moves = game.moves({
     square: square,
@@ -584,6 +595,7 @@ function onMouseoutSquare(square, piece) {
   removeGreySquares();
 }
 
+//load the piece theme
 function pieceTheme(piece) {
   let pieceTheme = localStorage.getItem("pieceTheme") || "../img/chesspieces/tatiana/";
   if (piece.search(/w/) !== -1) {
@@ -607,6 +619,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+//configure the board using chessboard.js
 var config = {
   draggable: true,
   position: "start",
@@ -637,11 +650,13 @@ chatButton.disabled = true;
 let chatSound = new Audio("../img/chat.mp3");
 chatSound.volume = 0.5;
 
-chatButton.addEventListener("click", function () {
-  let message = chatInput.value;
+//send a chat message
+document.getElementById("chat-button").addEventListener("click", function () {
+  const chatInput = document.getElementById("chat-input");
+  const chatBox = document.getElementById("chat-box");
+  const sanitizedText = chatInput.value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  chatBox.innerHTML += `<div>${sanitizedText}</div>`;
   chatInput.value = "";
-  sendMessage(message);
-  chatSound.play();
 });
 
 socket.on("chatMessage", ({ username, message }) => {
@@ -660,35 +675,8 @@ socket.on("chatMessage", ({ username, message }) => {
   chatBox.scrollTop = chatBox.scrollHeight;
 });
 
-async function censorMessage(message) {
-  const url = "https://corsproxy.io/?https://neutrinoapi.net/bad-word-filter";
-  const options = {
-    method: "POST",
-    headers: {
-      "User-ID": "parcivalltd",
-      "API-Key": "P8Zq9n2ePQxftphrbCKiyUAEH5WfvsBiRQidluQwtswGmDrY",
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: new URLSearchParams({
-      "censor-character": "*",
-      catalog: "strict",
-      content: message,
-    }),
-  };
-
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    return result["censored-content"];
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 function sendMessage(message) {
-  censorMessage(message).then((censoredMessage) => {
-    socket.emit("chatMessage", censoredMessage);
-  });
+  socket.emit("chatMessage", message);
 }
 
 chatButton.addEventListener("click", function () {
@@ -710,6 +698,7 @@ chatInput.addEventListener("keypress", function (event) {
   }
 });
 
+//update the theme based on the user's preference
 function updateTheme() {
   const theme = getCookie("theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 

@@ -25,7 +25,7 @@
     </div>
 
     <div class="content">
-      <div class="main-container d-flex justify-content-center align-items-center">
+      <div class="main-container d-flex align-items-center">
         <div class="playerInfo">
           <div class="row">
             <div class="col-4 d-flex justify-content-center align-items-center" style="height: 82px">
@@ -89,9 +89,9 @@
             </div>
             <div class="text-center">
               <ul id="footerList" class="list-inline">
-                <li class="list-inline-item">&copy; 2023 Julian Gabriel</li>
-                <li class="list-inline-item"><a href="/contact">Contact</a></li>
-                <li class="list-inline-item"><a href="/imprint">Imprint</a></li>
+                <li class="list-inline-item">&copy; 2024 Julian Gabriel</li>
+                <li class="list-inline-item"><a data-bs-toggle="modal" data-bs-target="#contactModal" href="#"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+                <li class="list-inline-item"><a data-bs-toggle="modal" data-bs-target="#imprintModal" href="#"><i class="fa-solid fa-file-alt"></i> Imprint</a></li>
               </ul>
             </div>
           </div>
@@ -112,12 +112,12 @@
           </div>
         </div>
         <div id="scrollDiv">
+
         <div id="mainRowM" class="row gx-5">
-            
             <div class="col">
               <div class="title-container d-flex flex-column justify-content-center align-items-center">
                 <img src="img/logo.png" alt="Logo" id="logo" />
-                <h1 id="pageTitle">J-Chess 2</h1>
+                <h1 id="pageTitle">J-Chess</h1>
               </div>
               <div id="borderDivMain">
                 <h1 id="mainHeader">J-Chess</h1>
@@ -157,33 +157,21 @@
               </div>
               <div class="text-center">
                 <ul id="footerList" class="list-inline">
-                  <li class="list-inline-item">&copy; 2023 Julian Gabriel</li>
-                  <li class="list-inline-item"><a href="/contact">Contact</a></li>
-                  <li class="list-inline-item"><a href="/imprint">Imprint</a></li>
+                  <li class="list-inline-item">&copy; 2024 Julian Gabriel</li>
+                  <li class="list-inline-item"><a  data-bs-toggle="modal" data-bs-target="#contactModal" href="#"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+                  <li class="list-inline-item"><a data-bs-toggle="modal" data-bs-target="#imprintModal" href="#"><i class="fa-solid fa-file-alt"></i> Imprint</a></li>
                 </ul>
               </div>
             </div>
 
-            <div id="padding2"></div>
-
             <div id="mobileBar" class="fixed-bottom d-flex flex-row align-items-center justify-content-center p-3">
-                
-
                 <h4 class="player-info-item">
                     <picture id="pfpPlayerInfo"></picture>
-                    <span id="playerUsername"></span>
                 </h4>
-                <h4 class="player-info-item">
-                    <i class="fas fa-trophy player-icon" aria-hidden="true"></i> 
-                    <span id="playerTrophies"></span>
-                </h4>
-                <h4 class="player-info-item">
-                    <i class="fas fa-chess-king player-icon" aria-hidden="true"></i> 
-                    <span id="playerRanking"></span>
-                </h4>
-
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#infoModal">
+                  <i class="fa-solid fa-info-circle"></i> 
+                </button>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settingsModal"><i class="fa-solid fa-gear"></i></button>
-                <br />
                 <button id="logoutButton" class="btn btn-danger mt-auto"><i class="fa-solid fa-right-from-bracket"></i></button>
             </div>
           </div>
@@ -192,24 +180,46 @@
       </div>
     </div>
 
-
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 id="playerUsername" class="modal-title" id="infoModalLabel"></h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body d-flex flex-column">
+            <h4 class="player-info-item">
+              <i class="fas fa-trophy player-icon" aria-hidden="true"></i> 
+              <span id="playerTrophies"></span>
+            </h4>
+            <h4 class="player-info-item">
+              <i class="fas fa-chess-king player-icon" aria-hidden="true"></i> 
+              <span id="playerRanking"></span>
+            </h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="form-group">
                 <label for="pieceTheme"><h5>Piece Theme</h5></label>
                 <br>
                 <div class="d-flex align-items-center">
-                    <img width="80px" id="piecePreview" src="img/chesspieces/icpieces//wP.svg" alt="Kein Vorschaubild verfügbar" class="mt-3" style="margin-top: 0px !important; margin-right: 15px;">
+                    <img width="80px" id="piecePreview" src="img/chesspieces/icpieces/wP.svg" alt="No preview available" class="mt-3" style="margin-top: 0px !important; margin-right: 15px;">
                     <select class="form-select me-3" id="pieceTheme" style="width: auto;">
                       <script>
-                        fetch('https://wavebeef.duckdns.org/projects/jchess/php/getThemes.php')
+                        fetch('https://web010.wifiooe.at/julian/JChess/www/php/getThemes.php')
                         .then(response => response.json())
                         .then(data => {
                           const select = document.getElementById('pieceTheme');
@@ -324,6 +334,45 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" onclick="acceptCookies()">Accept</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="imprintModal" tabindex="-1" aria-labelledby="imprintModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imprintModalLabel">Impressum</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+          </div>
+          <div class="modal-body">
+            <strong>Company Name:</strong> coding_academy<br>
+            <strong>Address:</strong> WIFI Linz<br>
+            <strong>Phone Number:</strong> +43 677 62452660<br>
+            <strong>Email:</strong> <a href="mailto:juliangabriel570@gmail.com">juliangabriel570@gmail.com</a><br>
+            <strong>Website:</strong> <a href="http://wavebeef.com">wavebeef.com</a><br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="contactModalLabel">Kontakt</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Schließen"></button>
+          </div>
+          <div class="modal-body">
+            <h2>Contact</h2>
+              <p>You can reach use under this email: <a href="mailto:juliangabriel570@gmail.com">juliangabriel570@gmail.com</a></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

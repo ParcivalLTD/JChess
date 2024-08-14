@@ -401,6 +401,7 @@ tr {
   margin: 20px;
   border-radius: 15px;
   width: 350px;
+  flex-direction: column !important;
 }
 
 #chat-container {
@@ -561,11 +562,11 @@ tr {
 }
 
 #enemyInfo {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 #playerInfo {
-  padding-top: 10px;
+  /* padding-top: 10px; */
 }
 
 #player-timer,
@@ -895,11 +896,57 @@ html.is-animating .transition-fade {
   gap: 1rem;
 }
 
+#chat-input-div,
+#chat-box {
+  width: 310px;
+}
+
+@media (max-width: 480px) {
+  #playersDiv {
+    flex-direction: column !important;
+  }
+
+  #enemyInfo,
+  #playerInfo {
+    padding: 5px !important;
+    width: calc(100vw - 56px) !important;
+  }
+
+  #sidebar {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 1460px) {
+  #evaluation-bar {
+    display: none;
+  }
+
+  #myBoard {
+    max-width: 600px;
+  }
+}
+
 @media (max-width: 1234px) {
   #mainRow,
-  #mainbar,
   .playerInfo {
     display: none !important;
+  }
+
+  #mainbar {
+    width: calc(100vw - 40px);
+    height: auto;
+    display: block !important;
+    z-index: 1;
+  }
+
+  #mainbar button {
+    position: relative;
+    bottom: 0;
+  }
+
+  #mainbar button:last-child {
+    left: calc(100vw - 165px);
   }
 
   #mainRowM {
@@ -914,9 +961,21 @@ html.is-animating .transition-fade {
     display: flex;
   }
 
+  #myBoard {
+    max-width: 400px;
+  }
+
+  #enemyInfo,
+  #playerInfo {
+    padding-left: 20px;
+    padding-right: 20px;
+    width: calc(100vw);
+  }
+
   .main-container {
     left: 0 !important;
     right: 0 !important;
+    padding-top: 0px !important;
   }
 
   #scrollDiv {
@@ -925,6 +984,9 @@ html.is-animating .transition-fade {
     width: 100vw;
     display: flex;
     justify-content: center;
+    height: calc(90vh + 20px);
+    padding-top: 40px;
+    margin-bottom: calc(10vh - 20px);
   }
 
   #globChatWindow,
@@ -935,10 +997,15 @@ html.is-animating .transition-fade {
 
   #borderDivMain {
     height: auto;
+    border: none;
   }
 
   #logoutButton {
     margin-top: 0px !important;
+  }
+
+  .text-center {
+    padding-bottom: 10px;
   }
 
   .player-info-item,
@@ -946,24 +1013,28 @@ html.is-animating .transition-fade {
     color: var(--header-color) !important;
   }
 
+  #endGameModalContent {
+    width: 70vw;
+    margin: auto;
+    right: 0;
+  }
+
   #sidebar {
-    flex-direction: row;
+    flex-direction: row !important;
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 250px;
+    height: auto;
     top: auto;
     justify-content: center;
     vertical-align: middle;
     margin: 0;
-    border-radius: 12px 12px 0px 0px;
+    border-radius: 0px;
+    z-index: 1;
   }
 
   #evaluation-bar {
-    left: 48.7%;
-    top: -5vw;
-    height: 80vw;
-    transform: rotate(90deg);
+    display: none;
   }
 
   #info,
@@ -974,21 +1045,48 @@ html.is-animating .transition-fade {
 
   #playersDiv {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-bottom: 0;
     position: relative;
-    left: calc(50% - 154.5px);
+    width: calc(100vw - 40px);
+    min-height: 70px;
   }
 }
 
-@media (max-width: 768px) {
-  .main-container {
-    /* background-color: blue; */
+@media (max-width: 275px) {
+  body {
+    display: none;
+  }
+
+  html {
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+  }
+
+  html::before {
+    content: "Your screen is too small to play the game. Please use a device with a larger screen.";
+    display: block;
+    text-align: center;
+    color: var(--text-color);
+    font-size: 16px;
+    font-family: "Ubuntu", sans-serif;
   }
 }
 
-@media (max-width: 480px) {
-  .main-container {
-    /* background-color: green; */
-  }
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--playerinfo-background-color);
+  border-radius: 10px;
 }

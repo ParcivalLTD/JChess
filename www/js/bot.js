@@ -22,6 +22,7 @@ let whiteTime = 900;
 let blackTime = 900;
 let intervalId = null;
 
+//start the game when the window loads
 window.onload = function () {
   const username = localStorage.getItem("username") || sessionStorage.getItem("username");
   const password = localStorage.getItem("password") || sessionStorage.getItem("password");
@@ -35,6 +36,7 @@ window.onload = function () {
   startGame();
 };
 
+//style the turn indicator and timer based on the turn
 function updatePlayerInfoBackground() {
   if (isMyTurn) {
     document.getElementById("playerInfo").classList.add("activeTurn");
@@ -55,6 +57,7 @@ function updatePlayerInfoBackground() {
 
 let gameEnded = false;
 
+//end the game and show the result
 async function gameEnd(result) {
   if (gameEnded) return;
 
@@ -111,6 +114,7 @@ async function gameEnd(result) {
   gameEndModal.show();
 }
 
+//start the timer and update the time every second
 function startTimer() {
   intervalId = setInterval(function () {
     if (game.turn() === "w") {
@@ -136,12 +140,14 @@ function startTimer() {
   }, 1000);
 }
 
+// format the time to mm:ss
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
   seconds = seconds % 60;
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }
 
+//when starting the game, show the board and player info
 function startGame() {
   isMyTurn = true;
   updatePlayerInfoBackground();
@@ -167,17 +173,21 @@ function startGame() {
 
   updateEvaluationBar();
   updateTakenPieces();
+
+  board.resize();
 }
 
 document.querySelector("#myBoard").style.display = "none";
 document.querySelector("#playerInfo").style.display = "none";
 document.querySelector("#enemyInfo").style.display = "none";
 
+//always show the latest moves
 function scrollToBottom() {
   var movesContainer = document.getElementById("moves-container");
   movesContainer.scrollTop = movesContainer.scrollHeight;
 }
 
+//update the moves list
 function updateMoves(move) {
   document.getElementById("info").innerHTML = "";
   var moveColor = game.turn() === "w" ? "white-moves" : "black-moves";
@@ -191,6 +201,7 @@ function updateMoves(move) {
   scrollToBottom();
 }
 
+//calculate the value of the pieces on the board
 function calculatePieceValue(fen, color) {
   const board = fen.split(" ")[0];
   let pieceValue = 0;
@@ -243,6 +254,7 @@ function calculatePieceValue(fen, color) {
   return pieceValue;
 }
 
+//update the taken pieces of player and of the bot
 function updateTakenPieces() {
   let whiteValue = calculatePieceValue(game.fen(), "white");
   let blackValue = calculatePieceValue(game.fen(), "black");
@@ -277,6 +289,7 @@ function greySquare(square) {
   }
 }
 
+//remove the grey squares
 function removeGreySquares() {
   $("#myBoard .square-55d63").removeClass("grey-square");
   $("#myBoard .black-3c85d").removeClass("grey-square");
@@ -284,6 +297,7 @@ function removeGreySquares() {
   $("#myBoard .square-55d63").removeClass("enemy-square");
 }
 
+//update square class
 function updateSquareClass(square) {
   var $square = $("#myBoard .square-" + square);
   if (game.get(square) && game.get(square).color === "b") {
@@ -297,30 +311,19 @@ function removeHighlights(color) {
   $board.find("." + squareClass).removeClass("highlight-" + color);
 }
 
-function onDragStart(source, piece, position, orientation) {
-  if (game.game_over()) return false;
-
-  if ((game.turn() === "w" && piece.search(/^b/) !== -1) || (game.turn() === "b" && piece.search(/^w/) !== -1)) {
-    return false;
-  }
-
-  if ((playerColor === "white" && piece.search(/^b/) !== -1) || (playerColor === "black" && piece.search(/^w/) !== -1)) {
-    return false;
-  }
-}
-
+//get the best move from the bot using the stockfish api
 function botMove(fen, depth, mode) {
   return fetch(`https://stockfish.online/api/stockfish.php?fen=${fen}&depth=${depth}&mode=${mode}`)
     .then((response) => response.json())
     .then((data) => {
       let bestMoveData = data.data.split(" ");
       let bestMove = bestMoveData[1];
-      console.log(data);
       return bestMove;
     })
     .catch((error) => console.error("Error:", error));
 }
 
+//make the bot move after 1.7 seconds
 function makeBotMove() {
   const timeoutPromise = new Promise((resolve) => {
     setTimeout(() => {
@@ -374,6 +377,7 @@ function makeBotMove() {
     .catch((error) => console.error("Error:", error));
 }
 
+//get the evaluation of the current position
 function getEvaluation(fen) {
   return fetch(`https://stockfish.online/api/stockfish.php?fen=${fen}&depth=13&mode=eval`)
     .then((response) => response.json())
@@ -384,6 +388,7 @@ function getEvaluation(fen) {
     .catch((error) => console.error("Error:", error));
 }
 
+//update the evaluation bar based on the evaluation
 function updateEvaluationBar() {
   const evaluationBar = document.getElementById("evaluation-value");
   evaluationBar.style.transition = "height 0.5s ease";
@@ -393,6 +398,19 @@ function updateEvaluationBar() {
   evaluationBar.style.height = `${heightPercentage}%`;
   evaluationBar.style.backgroundColor = playerColor === "white" ? "#f1eded" : "rgb(70, 70, 70)";
   document.getElementById("evaluation-bar").style.backgroundColor = playerColor === "black" ? "#f1eded" : "rgb(70, 70, 70)";
+}
+
+//manage the drag and drop of the pieces and setting the turn
+function onDragStart(source, piece, position, orientation) {
+  if (game.game_over()) return false;
+
+  if ((game.turn() === "w" && piece.search(/^b/) !== -1) || (game.turn() === "b" && piece.search(/^w/) !== -1)) {
+    return false;
+  }
+
+  if ((playerColor === "white" && piece.search(/^b/) !== -1) || (playerColor === "black" && piece.search(/^w/) !== -1)) {
+    return false;
+  }
 }
 
 function onDrop(source, target) {
@@ -423,6 +441,7 @@ function onDrop(source, target) {
   makeBotMove();
 }
 
+//end the game when the player resigns
 resignButton.addEventListener("click", function () {
   if (playerColor === "white") {
     gameEnd("blackWins");
@@ -431,6 +450,7 @@ resignButton.addEventListener("click", function () {
   }
 });
 
+//when the player closes the tab or leaves the app, end the game
 window.onbeforeunload = function () {
   if (playerColor === "white") {
     gameEnd("blackWins");
@@ -443,6 +463,7 @@ function onMoveEnd() {
   $board.find(".square-" + squareToHighlight).addClass("highlight-black");
 }
 
+//check if the player is in checkmate or draw
 function onSnapEnd() {
   board.position(game.fen());
 
@@ -460,12 +481,10 @@ function onSnapEnd() {
   }
 }
 
+//function to change the trophies of a player
 function changeTrophies(username, trophies) {
-  fetch("../php/updateTrophies.php", {
+  fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify({
       username: username,
       trophies: trophies,
@@ -477,9 +496,10 @@ function changeTrophies(username, trophies) {
     });
 }
 
+//function to get the trophies of a player
 async function getTrophies(username) {
   try {
-    const response = await fetch(`../php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -494,6 +514,7 @@ async function getTrophies(username) {
   }
 }
 
+//show the possible moves of a piece when hovering over it
 function onMouseoverSquare(square, piece) {
   var moves = game.moves({
     square: square,
@@ -513,6 +534,7 @@ function onMouseoutSquare(square, piece) {
   removeGreySquares();
 }
 
+//load the piece theme
 function pieceTheme(piece) {
   let pieceTheme = localStorage.getItem("pieceTheme") || "../img/chesspieces/tatiana/";
   if (piece.search(/w/) !== -1) {
@@ -536,6 +558,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+//configure the board using chessboard.js
 var config = {
   draggable: true,
   position: "start",
@@ -559,6 +582,7 @@ document.querySelector("#home-button").addEventListener("click", function () {
 document.getElementById("enemyPlayerUsername").textContent = enemyPlayerUsername;
 document.getElementById("playerUsername").textContent = playerUsername;
 
+//set the color theme based on the user's preference
 function updateTheme() {
   const theme = getCookie("theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 
