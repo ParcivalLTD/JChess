@@ -7,5 +7,10 @@ cmds = ['npm install']
 [start]
 cmd = 'npm run start'
 
+[build]
+# Command to install PHP dependencies
+build_command = "composer install"
+
 [run]
-start_command = "php-fpm"
+# Command to start PHP-FPM
+start_command = "php-fpm -D"
