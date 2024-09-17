@@ -4,23 +4,23 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
-// Define the database connection URI
-$uri = "mysql://avnadmin:AVNS_Ww0zuzpscfo0aQPRXrY@test-ju20gabriel-5cf8.a.aivencloud.com:25251/defaultdb?ssl-mode=REQUIRED";
+$db_host = "130.61.244.127";
+$db_port = "5432"; 
+$db_name = "default";
+$db_user = "mysql";
+$db_pass = "DVFueeDxbjo7tvb0jkXintLK6gIK00sklA5OWejE92IoE8GVBmbvwLIIqXVrJUCl"; 
 
-$fields = parse_url($uri);
-
-$conn = "mysql:";
-$conn .= "host=" . $fields["host"];
-$conn .= ";port=" . $fields["port"];
-$conn .= ";dbname=defaultdb";
-$conn .= ";sslmode=verify-ca;sslrootcert=ca.pem";
+$dsn = "mysql:host=$db_host;port=$db_port;dbname=$db_name";
 
 try {
-  // Create a new PDO instance for the database connection
-  $db = new PDO($conn, $fields["user"], $fields["pass"]);
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Create a new PDO instance for the database connection
+    $db = new PDO($dsn, $db_user, $db_pass, $ssl_options);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    echo "Connection successful!";
 } catch (Exception $e) {
-  echo "Error: " . $e->getMessage();
-  exit;
+    // Handle connection error
+    echo "Error: " . $e->getMessage();
+    exit;
 }
 ?>

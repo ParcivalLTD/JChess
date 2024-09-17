@@ -143,7 +143,7 @@ function login() {
   const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
 
   if (username && password) {
-    fetch("https://web010.wifiooe.at/julian/JChess/www/php/backend.php", {
+    fetch("../php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -198,7 +198,7 @@ if (document.getElementById("registerButton")) {
 }
 
 //fetch top users
-fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php")
+fetch("../php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
     if (data.status === "success") {
@@ -227,7 +227,7 @@ function register() {
   const password = document.getElementById("registerPassword").value;
 
   if (username && password) {
-    fetch("https://web010.wifiooe.at/julian/JChess/www/php/backend.php", {
+    fetch("../php/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -454,7 +454,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //fetch the user's trophies and ranking
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`../php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -471,7 +471,7 @@ async function getTrophies(username) {
 
 async function getRanking(username) {
   try {
-    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/getRanking.php?username=${username}`);
+    const response = await fetch(`../php/getRanking.php?username=${username}`);
     const data = await response.json();
 
     if (data) {
@@ -543,7 +543,7 @@ updateTheme();
 
 //fetch the global chat messages and display them
 function fetchMessages() {
-  fetch("https://web010.wifiooe.at/julian/JChess/www/php/globalChat.php")
+  fetch("../php/globalChat.php")
     .then((response) => response.json())
     .then((data) => {
       document.querySelectorAll("#spinnerGlob21").forEach((el) => (el.style.display = "none"));
@@ -621,7 +621,7 @@ function sendMessage(username, message) {
   document.getElementById("spinnerGlob").style.display = "inline-block";
   document.getElementById("sendGlob").style.display = "none";
 
-  fetch("https://web010.wifiooe.at/julian/JChess/www/php/globalChat.php", {
+  fetch("../php/globalChat.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

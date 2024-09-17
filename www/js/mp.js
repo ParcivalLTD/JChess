@@ -1,4 +1,4 @@
-const socket = io("http://localhost:3000");
+const socket = io("localhost:3000");
 var board = null;
 var $board = $("#myBoard");
 var game = new Chess();
@@ -34,7 +34,7 @@ let hasRedirected = false;
 
 socket.on("gamemode", function (gamemode) {
   if (!hasRedirected) {
-    window.location.assign("https://web010.wifiooe.at/julian/JChess/www/online?=" + gamemode + "&" + token);
+    window.location.assign("../online?=" + gamemode + "&" + token);
     hasRedirected = true;
   }
 });
@@ -544,7 +544,7 @@ function onSnapEnd() {
 
 //function to change the trophies of a player
 function changeTrophies(username, trophies) {
-  fetch("https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php", {
+  fetch("../php/updateTrophies.php", {
     method: "POST",
     body: JSON.stringify({
       username: username,
@@ -560,7 +560,7 @@ function changeTrophies(username, trophies) {
 //function to get the trophies of a player
 async function getTrophies(username) {
   try {
-    const response = await fetch(`https://web010.wifiooe.at/julian/JChess/www/php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`../php/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
