@@ -1,5 +1,9 @@
-[phases.build]
-cmd = npm install
+[phases.setup]
+# nixLibs = ["...", "libuuid", "libGL"]
+nixPkgs = ['nodejs', 'yarn']
 
-[phases.start]
-cmd = npm start
+[phases.install]
+cmds = ['npm install']
+
+[start]
+cmd = 'npm run start'
