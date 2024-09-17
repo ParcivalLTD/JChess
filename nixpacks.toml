@@ -1,6 +1,5 @@
 [phases.setup]
-# nixLibs = ["...", "libuuid", "libGL"]
-nixPkgs = ['nodejs', 'yarn']
+nixPkgs = ['nodejs']
 
 [phases.install]
 cmds = ['npm install']

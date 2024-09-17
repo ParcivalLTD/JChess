@@ -1,4 +1,4 @@
-const socket = io("https://jchess-socket.onrender.com");
+const socket = io("http://localhost:3000");
 var board = null;
 var $board = $("#myBoard");
 var game = new Chess();
