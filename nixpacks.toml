@@ -8,8 +8,8 @@ cmds = ['npm install']
 cmd = 'npm run start'
 
 [build]
-# Command to install PHP dependencies
-build_command = "composer install"
+type = "php"
+
 
 [run]
 # Command to start PHP-FPM
