@@ -6,3 +6,5 @@ COPY ./www /var/www/html/
 
 # Optional: Set the working directory (not strictly necessary here, but useful if you run other commands)
 WORKDIR /var/www/html
+
+EXPOSE 80
