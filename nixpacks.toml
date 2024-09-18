@@ -8,5 +8,4 @@ cmds = ['npm install']
 cmd = 'npm run start'
 
 [run]
-# Command to start PHP-FPM
 start_command = "php-fpm -D"
