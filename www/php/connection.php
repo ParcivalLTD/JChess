@@ -1,13 +1,19 @@
 <?php
-$dsn = "mysql:host=localhost;dbname=default";
+$servername = "localhost"; 
 $username = "mysql";
 $password = "DVFueeDxbjo7tvb0jkXintLK6gIK00sklA5OWejE92IoE8GVBmbvwLIIqXVrJUCl";
+$database = "default";
 
-try {
-    $pdo = new PDO($dsn, $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully";
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+echo "Connected successfully";
+
+// Close connection
+$conn->close();
 ?>
