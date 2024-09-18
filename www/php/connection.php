@@ -4,23 +4,24 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
-$db_host = "130.61.244.127";
-$db_port = "3306"; 
-$db_name = "default";
-$db_user = "mysql";
-$db_pass = "DVFueeDxbjo7tvb0jkXintLK6gIK00sklA5OWejE92IoE8GVBmbvwLIIqXVrJUCl"; 
+$host = 'http://coolify.wavebeef.com/';     // or your host
+$db   = 'default'; // replace with your database name
+$user = 'mysql';      // replace with your database username
+$pass = 'DVFueeDxbjo7tvb0jkXintLK6gIK00sklA5OWejE92IoE8GVBmbvwLIIqXVrJUCl';      // replace with your database password
+$charset = 'utf8mb4';
 
-$dsn = "mysql:host=$db_host;port=$db_port;dbname=$db_name";
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
 
 try {
-    // Create a new PDO instance for the database connection
-    $db = new PDO($dsn, $db_user, $db_pass);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    echo "Connection successful!";
-} catch (Exception $e) {
-    // Handle connection error
-    echo "Error: " . $e->getMessage();
-    exit;
+    $pdo = new PDO($dsn, $user, $pass, $options);
+    echo "Connected successfully!";
+} catch (\PDOException $e) {
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 ?>
+
