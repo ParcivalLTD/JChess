@@ -1,6 +1,6 @@
 {
-  "name": "jchess",
-  "description": "chess platform",
+  "name": "parcivalltd/j-chess",
+  "description": "A brief description of my project",
   "require": {
     "php": "^8.0",
     "monolog/monolog": "^2.0"
