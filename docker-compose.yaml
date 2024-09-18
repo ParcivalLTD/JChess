@@ -1,8 +1,6 @@
 version: "3.8"
 services:
   web:
-    image: php:8.0-apache
-    volumes:
-      - ./www:/var/www/html
+    build: . # Use the Dockerfile in the current directory
     ports:
-      - "8081:80" # Map port 8081 on the host to port 80 in the container
+      - "8081:80" # Map a port on your host to port 80 in the container
