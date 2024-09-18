@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
-$host = 'http://coolify.wavebeef.com/';     // or your host
+$host = 'localhost';     // or your host
 $db   = 'default'; // replace with your database name
 $user = 'mysql';      // replace with your database username
 $pass = 'DVFueeDxbjo7tvb0jkXintLK6gIK00sklA5OWejE92IoE8GVBmbvwLIIqXVrJUCl';      // replace with your database password
