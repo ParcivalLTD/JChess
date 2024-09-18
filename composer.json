@@ -1,0 +1,8 @@
+{
+  "name": "jchess",
+  "description": "chess platform",
+  "require": {
+    "php": "^8.0",
+    "monolog/monolog": "^2.0"
+  }
+}
