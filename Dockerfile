@@ -6,6 +6,3 @@ COPY ./www /var/www/html/
 
 # Optional: Set the working directory (not strictly necessary here, but useful if you run other commands)
 WORKDIR /var/www/html
-
-# Expose port 80 (default HTTP port)
-EXPOSE 80
