@@ -5,7 +5,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
 $db_host = "130.61.244.127";
-$db_port = "5432"; 
+$db_port = "3306"; 
 $db_name = "default";
 $db_user = "mysql";
 $db_pass = "DVFueeDxbjo7tvb0jkXintLK6gIK00sklA5OWejE92IoE8GVBmbvwLIIqXVrJUCl"; 
