@@ -1,8 +1,0 @@
-version: "3.8"
-services:
-  web:
-    image: php:8.0-apache
-    volumes:
-      - ./www:/var/www/html
-    ports:
-      - "8081:80"
