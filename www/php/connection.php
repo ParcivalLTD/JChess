@@ -14,7 +14,7 @@ $dsn = "mysql:host=$db_host;port=$db_port;dbname=$db_name";
 
 try {
     // Create a new PDO instance for the database connection
-    $db = new PDO($dsn, $db_user, $db_pass, $ssl_options);
+    $db = new PDO($dsn, $db_user, $db_pass);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
     echo "Connection successful!";
