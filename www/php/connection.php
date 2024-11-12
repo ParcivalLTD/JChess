@@ -1,10 +1,11 @@
 <?php
-$servername = "mysql"; 
-$username = "mysql";
-$password = getenv('DB_PASSWORD');
-$database = "default";
+// Parse the URL
+$url = parse_url("mysql://mysql:NgrQkA7soMIEN5REyRmESImerNI0wZtrATZWdj4CwFzDcPCeWJwTUbF4AZhX50Jb@acc8kw0sog4ws4wo8s0kwggc:3306/default");
 
-echo $password;
+$servername = $url["host"];
+$username = $url["user"];
+$password = $url["pass"];
+$database = ltrim($url["path"], '/');
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
