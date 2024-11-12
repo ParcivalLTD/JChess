@@ -4,6 +4,8 @@ $username = "mysql";
 $password = getenv('DB_PASSWORD');
 $database = "default";
 
+echo $password;
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 
