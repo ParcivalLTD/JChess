@@ -1,5 +1,5 @@
 <?php
-$servername = "acc8kw0sog4ws4wo8s0kwggc"; // Host from the connection string
+$servername = "mysql-db"; // Host from the connection string
 $username = "mysql";                       // Username from the connection string
 $password = "NgrQkA7soMIEN5REyRmESImerNI0wZtrATZWdj4CwFzDcPCeWJwTUbF4AZhX50Jb"; // Password from the connection string
 $dbname = "default";                       // Database name from the connection string
