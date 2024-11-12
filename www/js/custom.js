@@ -199,9 +199,11 @@ if (document.getElementById("registerButton")) {
 
 //fetch top users
 fetch("../php/updateTrophies.php")
-  .then((response) => response.json())
+  .then((response) => {
+    console.log("Raw response:", response); // Log the raw response
+    return response.json();
+  })
   .then((data) => {
-    console.log("Response data:", data); // Log the entire response
     if (data.status === "success") {
       let table = '<table id="topUsersTable" class="table"><thead><tr><th scope="col"><i class="fas fa-user"></i></th><th scope="col"><i class="fa-solid fa-trophy"></i></th></tr></thead><tbody>';
       data.users.forEach((user) => {
