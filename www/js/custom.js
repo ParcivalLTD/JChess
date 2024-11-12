@@ -201,6 +201,7 @@ if (document.getElementById("registerButton")) {
 fetch("../php/updateTrophies.php")
   .then((response) => response.json())
   .then((data) => {
+    console.log("Response data:", data); // Log the entire response
     if (data.status === "success") {
       let table = '<table id="topUsersTable" class="table"><thead><tr><th scope="col"><i class="fas fa-user"></i></th><th scope="col"><i class="fa-solid fa-trophy"></i></th></tr></thead><tbody>';
       data.users.forEach((user) => {
@@ -214,7 +215,7 @@ fetch("../php/updateTrophies.php")
     }
   })
   .catch((error) => {
-    console.error("Error:", error, "Message: ", data);
+    console.error("Error:", error, "Message: ");
   });
 
 //register function
