@@ -1,5 +1,5 @@
 <?php
-$servername = "localhost:3306"; 
+$servername = "mysql"; 
 $username = "mysql";
 $password = getenv('DB_PASSWORD');
 $database = "default";
