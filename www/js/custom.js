@@ -214,7 +214,7 @@ fetch("../php/updateTrophies.php")
     }
   })
   .catch((error) => {
-    console.error("Error:", error);
+    console.error("Error:", error, "Message: ", data);
   });
 
 //register function
