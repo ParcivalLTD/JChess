@@ -1,31 +1,21 @@
 version: '3.8'
 
 services:
-  node:
-    build:
-      context: .
-      dockerfile: Dockerfile.node
-    labels:
-      - "coolify.enable=true"
-      - "coolify.port=3000"
-      - "coolify.route=/api"
-    environment:
-      - NODE_ENV=production
-
-  php:
-    image: php:8.2-apache
+  frontend:
+    image: php:8.2-fpm-apache
+    container_name: frontend
     volumes:
       - ./www:/var/www/html
-    labels:
-      - "coolify.enable=true"
-      - "coolify.port=80"
-      - "coolify.route=/php"
+    ports:
+      - "8080:80"
+    restart: always
 
-  static:
-    image: nginx:alpine
-    volumes:
-      - ./www:/usr/share/nginx/html
-    labels:
-      - "coolify.enable=true"
-      - "coolify.port=80"
-      - "coolify.route=/"
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: always

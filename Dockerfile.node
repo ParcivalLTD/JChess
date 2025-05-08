@@ -2,10 +2,11 @@ FROM node:18
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package*.json ./
 RUN npm install
 
-COPY backend ./backend
-COPY www ./www
+COPY . .
 
-CMD ["node", "backend/index.js"]
+EXPOSE 3000
+
+CMD ["node", "index.js"]
