@@ -1,19 +1,11 @@
-# Use the official PHP image with Apache
-FROM php:8.0-apache
+FROM node:18
 
-# Install necessary PHP extensions and update package lists
-RUN apt-get update && apt-get install -y libzip-dev libonig-dev && \
-    docker-php-ext-install pdo pdo_mysql mysqli
+WORKDIR /app
 
-# Enable Apache mod_rewrite for .htaccess support
-RUN a2enmod rewrite
+COPY package.json ./
+RUN npm install
 
-# Copy files from the local 'www' directory to the container's '/var/www/html'
-COPY www/ /var/www/html/
+COPY backend ./backend
+COPY www ./www
 
-# Ensure the Apache configuration allows overrides and permissions
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 755 /var/www/html
-
-# Expose port 80
-EXPOSE 80
+CMD ["node", "backend/index.js"]

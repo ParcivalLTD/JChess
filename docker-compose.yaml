@@ -1,6 +1,19 @@
-version: "3.8"
+version: '3.8'
+
 services:
-  web:
-    build: . # Use the Dockerfile in the current directory
+  php:
+    image: php:8.2-apache
+    volumes:
+      - ./www:/var/www/html
     ports:
-      - "8081:80" # Map a port on your host to port 80 in the container
+      - "8081:80"
+
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+
