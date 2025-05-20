@@ -546,7 +546,7 @@ updateTheme();
 
 //fetch the global chat messages and display them
 function fetchMessages() {
-  fetch("../php/globalChat.php")
+  fetch("https://php-service.wavebeef.com/globalChat.php")
     .then((response) => response.json())
     .then((data) => {
       document.querySelectorAll("#spinnerGlob21").forEach((el) => (el.style.display = "none"));
