@@ -1,24 +1,17 @@
 <?php
 $url = parse_url(getenv('DATABASE_URL'));
 
-$servername = $url["host"];
-$username = $url["user"];
-$password = $url["pass"];
-$database = ltrim($url["path"], '/');
+$host = $url["host"];
+$dbname = ltrim($url["path"], '/');
+$user = $url["user"];
+$pass = $url["pass"];
 $port = $url["port"] ?? 3306;
 
-// Create a new MySQLi connection
-$conn = new mysqli($servername, $username, $password, $database, $port);
-
-// Check if the connection was successful
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-echo "Connected successfully";
-
-// Only close if the connection is active
-if ($conn && $conn->ping()) {
-    $conn->close();
+try {
+    $db = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $user, $pass);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 ?>
