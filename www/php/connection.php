@@ -25,9 +25,14 @@ $user = $url["user"];
 $pass = $url["pass"];
 $port = $url["port"] ?? 3306;
 
+// Corrected: Use string concatenation operator (.)
+echo $host . ", " . $dbname . ", " . $user . ", " . $pass . ", " . $port . "<br>";
+
 try {
+    // Create a new PDO instance with the connection details
     $db = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $user, $pass);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connection successful!";
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
