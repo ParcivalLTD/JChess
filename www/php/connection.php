@@ -1,4 +1,22 @@
 <?php
+// Allow requests from your frontend domain
+header("Access-Control-Allow-Origin: https://jchess.wavebeef.com");
+
+// Allow common HTTP methods
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+
+// Allow specific headers
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Allow credentials (e.g. with cookies, auth headers)
+header("Access-Control-Allow-Credentials: true");
+
+// Handle preflight OPTIONS requests and exit early
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
+
 $url = parse_url(getenv('DATABASE_URL'));
 
 $host = $url["host"];
