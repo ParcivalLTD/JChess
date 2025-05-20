@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Install mysqli and other useful extensions
+# Install required extensions
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -8,12 +8,12 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    && docker-php-ext-install mysqli
+    && docker-php-ext-install mysqli pdo pdo_mysql
 
-# Enable Apache mod_rewrite if needed
+# Enable Apache rewrite module (optional but often useful)
 RUN a2enmod rewrite
 
-# Copy PHP code into container
+# Copy your PHP app into the container
 COPY . /var/www/html/
 
 EXPOSE 80
