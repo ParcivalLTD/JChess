@@ -313,6 +313,7 @@ function removeHighlights(color) {
 
 //get the best move from the bot using the stockfish api
 function botMove(fen, depth, mode) {
+  console.log(`https://stockfish.online/api/s/v2.php?fen=${fen}&depth=${depth}&mode=${mode}`);
   return fetch(`https://stockfish.online/api/s/v2.php?fen=${fen}&depth=${depth}&mode=${mode}`)
     .then((response) => response.json())
     .then((data) => {
