@@ -1,6 +1,6 @@
 <?php
 // Parse the URL
-$url = parse_url("mysql://mariadb:xtvSyBCEjX3bFJM9ZO8NKey3T6O4Hw9HBNmYG9WsyrRoB1ugZao1BcLGbznOMiI7@tosoos4s0ow0ww84w4co0w80:3306/default");
+$url = parse_url("mysql://mysql:NgrQkA7soMIEN5REyRmESImerNI0wZtrATZWdj4CwFzDcPCeWJwTUbF4AZhX50Jb@acc8kw0sog4ws4wo8s0kwggc:3306/default");
 
 $servername = $url["host"];
 $username = $url["user"];
