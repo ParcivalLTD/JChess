@@ -313,19 +313,28 @@ function removeHighlights(color) {
 
 //get the best move from the bot using the stockfish api
 function botMove(fen, depth, mode) {
-  console.log(`https://stockfish.online/api/s/v2.php?fen=${fen}&depth=${depth}&mode=${mode}`);
-  return fetch(`https://stockfish.online/api/s/v2.php?fen=${fen}&depth=${depth}&mode=${mode}`)
+  const url = `https://stockfish.online/api/s/v2.php?fen=${encodeURIComponent(fen)}&depth=${depth}&mode=${mode}`;
+  console.log(url);
+
+  return fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      if (response.bestmove && typeof response.bestmove === "string") {
-        const move = response.bestmove.split(" ")[1];
+      if (data.bestmove && typeof data.bestmove === "string") {
+        const parts = data.bestmove.split(" ");
+        const move = parts[1] ?? null;
+
         return move;
       } else {
-        console.error("bestmove missing or not a string", response);
+        console.error("bestmove missing or not a string", data);
+        return null;
       }
     })
-    .catch((error) => console.error("Error:", error));
+    .catch((error) => {
+      console.error("Error:", error);
+      return null;
+    });
 }
+
 
 //make the bot move after 1.7 seconds
 function makeBotMove() {
