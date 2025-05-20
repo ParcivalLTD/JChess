@@ -4,7 +4,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 
 // Directory path where the chess piece images are stored
-$dir = '../img/chesspieces/';
+$dir = 'img/chesspieces/';
 
 // Get all the folders in the directory, excluding '.' and '..'
 $folders = array_diff(scandir($dir), array('..', '.'));
