@@ -316,11 +316,12 @@ function botMove(fen, depth, mode) {
   return fetch(`https://stockfish.online/api/s/v2.php?fen=${fen}&depth=${depth}&mode=${mode}`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
-      let bestMoveData = data.data.split(" ");
-      
-      let bestMove = bestMoveData[1];
-      return bestMove;
+      if (response.bestmove && typeof response.bestmove === "string") {
+        const move = response.bestmove.split(" ")[1];
+        return move;
+      } else {
+        console.error("bestmove missing or not a string", response);
+      }
     })
     .catch((error) => console.error("Error:", error));
 }
