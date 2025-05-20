@@ -1,4 +1,4 @@
-const socket = io("https://chessapi.wavebeef.com:4543");
+const socket = io("http://chessapi.wavebeef.com:4543");
 var board = null;
 var $board = $("#myBoard");
 var game = new Chess();
