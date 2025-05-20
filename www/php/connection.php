@@ -1,17 +1,9 @@
 <?php
-// Allow requests from your frontend domain
 header("Access-Control-Allow-Origin: https://jchess.wavebeef.com");
-
-// Allow common HTTP methods
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-
-// Allow specific headers
 header("Access-Control-Allow-Headers: Content-Type");
-
-// Allow credentials (e.g. with cookies, auth headers)
 header("Access-Control-Allow-Credentials: true");
 
-// Handle preflight OPTIONS requests and exit early
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
@@ -28,18 +20,20 @@ try {
     $db = new PDO("mysql:host=$host;port=$port;dbname=$dbname", $user, $pass);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "
+    $db->exec("
         CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(255) NOT NULL UNIQUE,
             password VARCHAR(255) NOT NULL,
+            trophies INT DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-    ";
-
-    $db->exec($sql);
-    echo "Table 'users' created or already exists.";
+    ");
+    
+    // No output here
 } catch (PDOException $e) {
-    die("Setup failed: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode(['status' => 'error', 'message' => 'DB connection failed: ' . $e->getMessage()]);
+    exit;
 }
 ?>
