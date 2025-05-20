@@ -483,7 +483,7 @@ function onSnapEnd() {
 
 //function to change the trophies of a player
 function changeTrophies(username, trophies) {
-  fetch("../php/updateTrophies.php", {
+  fetch("https://php-service.wavebeef.com/updateTrophies.php", {
     method: "POST",
     body: JSON.stringify({
       username: username,
@@ -499,7 +499,7 @@ function changeTrophies(username, trophies) {
 //function to get the trophies of a player
 async function getTrophies(username) {
   try {
-    const response = await fetch(`../php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://php-service.wavebeef.com/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
