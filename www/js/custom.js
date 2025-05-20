@@ -143,7 +143,7 @@ function login() {
   const stayLoggedIn = document.getElementById("stayLoggedIn").checked;
 
   if (username && password) {
-    fetch("../php/backend.php", {
+    fetch("https://php-service.wavebeef.com/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -198,7 +198,7 @@ if (document.getElementById("registerButton")) {
 }
 
 //fetch top users
-fetch("../php/updateTrophies.php")
+fetch("https://php-service.wavebeef.com/updateTrophies.php")
   .then((response) => {
     console.log("Raw response:", response); // Log the raw response
     return response.json();
@@ -230,7 +230,7 @@ function register() {
   const password = document.getElementById("registerPassword").value;
 
   if (username && password) {
-    fetch("../php/backend.php", {
+    fetch("https://php-service.wavebeef.com/backend.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -457,7 +457,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //fetch the user's trophies and ranking
 async function getTrophies(username) {
   try {
-    const response = await fetch(`../php/updateTrophies.php?username=${username}`);
+    const response = await fetch(`https://php-service.wavebeef.com/updateTrophies.php?username=${username}`);
     const data = await response.json();
 
     if (data.status === "success") {
@@ -474,7 +474,7 @@ async function getTrophies(username) {
 
 async function getRanking(username) {
   try {
-    const response = await fetch(`../php/getRanking.php?username=${username}`);
+    const response = await fetch(`https://php-service.wavebeef.com/getRanking.php?username=${username}`);
     const data = await response.json();
 
     if (data) {
@@ -624,7 +624,7 @@ function sendMessage(username, message) {
   document.getElementById("spinnerGlob").style.display = "inline-block";
   document.getElementById("sendGlob").style.display = "none";
 
-  fetch("../php/globalChat.php", {
+  fetch("https://php-service.wavebeef.com/globalChat.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
